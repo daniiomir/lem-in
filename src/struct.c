@@ -1,41 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.h                                           :+:      :+:    :+:   */
+/*   struct.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: swarner <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/06 16:21:30 by swarner           #+#    #+#             */
-/*   Updated: 2019/10/06 16:21:33 by swarner          ###   ########.fr       */
+/*   Created: 2019/10/15 17:05:17 by swarner           #+#    #+#             */
+/*   Updated: 2019/10/15 17:05:19 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEM_IN_H
-
-# define LEM_IN_H
-
-# include "libft.h"
-
-typedef struct		s_link
-{
-	struct s_path	*path;
-	struct s_link	*next;
-}					t_link;
+#include "lem_in.h"
 ​
-typedef struct		s_path
+t_path	*new_path(char *name)
 {
-	char			*name;
-	struct s_link	*link;
-	struct s_path	*next;
-	struct s_path	*prev;
-}					t_path;
+	t_path	*new;
+	if ((new = (t_path *)malloc(sizeof(t_path))))
+	{
+		new->link = NULL;
+		new->next = NULL;
+		new->name = name;
+	}
+}
 ​
-typedef struct		s_lem
+t_link	*new_link(t_path *room)
 {
-	struct s_path	*way;
-	struct s_path	*start;
-	struct s_path	*end;
-	int				ants;
-}					t_lem;
-
-#endif
+	t_link	*new;
+​
+	if ((new = (t_link *)malloc(sizeof(t_link))))
+	{
+		new->path = room;
+		new->next = NULL;
+	}
+}

@@ -14,5 +14,10 @@
 
 int	main(void)
 {
-	ft_putstr("lem_in test");
+	char	*line;
+
+	while(get_next_line(0, &line))
+	{
+		ft_putendl(line);
+	}
 }
