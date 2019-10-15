@@ -21,6 +21,7 @@ t_path	*new_path(char *name)
 		new->next = NULL;
 		new->name = name;
 	}
+	return (new);
 }
 ​
 t_link	*new_link(t_path *room)
@@ -32,4 +33,5 @@ t_link	*new_link(t_path *room)
 		new->path = room;
 		new->next = NULL;
 	}
+	return (new);
 }

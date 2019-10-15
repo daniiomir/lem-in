@@ -79,8 +79,9 @@ file(REMOVE_RECURSE
   "CMakeFiles/lem_in.dir/lib/src/ft_unsigned_itoa.c.o"
   "CMakeFiles/lem_in.dir/lib/src/get_next_line.c.o"
   "CMakeFiles/lem_in.dir/src/main.c.o"
-  "lem_in.pdb"
+  "CMakeFiles/lem_in.dir/src/struct.c.o"
   "lem_in"
+  "lem_in.pdb"
 )
 
 # Per-language clean rules from dependency scanning.
