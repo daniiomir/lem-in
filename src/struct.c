@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   struct.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swarner <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cnikia <cnikia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/15 17:05:17 by swarner           #+#    #+#             */
-/*   Updated: 2019/10/15 17:05:19 by swarner          ###   ########.fr       */
+/*   Created: 2019/10/14 18:27:39 by cnikia            #+#    #+#             */
+/*   Updated: 2019/10/15 17:41:12 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-​
+
 t_path	*new_path(char *name)
 {
 	t_path	*new;
@@ -23,11 +23,11 @@ t_path	*new_path(char *name)
 	}
 	return (new);
 }
-​
+
 t_link	*new_link(t_path *room)
 {
 	t_link	*new;
-​
+
 	if ((new = (t_link *)malloc(sizeof(t_link))))
 	{
 		new->path = room;
