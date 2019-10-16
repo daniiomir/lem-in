@@ -24,6 +24,7 @@ typedef struct		s_link
 typedef struct		s_path
 {
 	char			*name;
+	int 			coords[2];
 	struct s_link	*link;
 	struct s_path	*next;
 	struct s_path	*prev;
@@ -36,5 +37,10 @@ typedef struct		s_lem
 	struct s_path	*end;
 	int				ants;
 }					t_lem;
+
+t_path	*new_path(char *name, int x, int y);
+t_link	*new_link(t_path *room);
+t_lem   *new_lem();
+void	read_map(t_lem *lem);
 
 #endif

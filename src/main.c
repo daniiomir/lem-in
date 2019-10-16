@@ -12,12 +12,11 @@
 
 #include "lem_in.h"
 
-int	main(void)
-{
-	char	*line;
 
-	while(get_next_line(0, &line))
-	{
-		ft_putendl(line);
-	}
+int		main(void)
+{
+	t_lem	*lem;
+
+	lem = new_lem();
+	read_map(lem);
 }

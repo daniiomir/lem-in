@@ -12,14 +12,18 @@
 
 #include "lem_in.h"
 
-t_path	*new_path(char *name)
+t_path	*new_path(char *name, int x, int y)
 {
 	t_path	*new;
+
 	if ((new = (t_path *)malloc(sizeof(t_path))))
 	{
 		new->link = NULL;
 		new->next = NULL;
+		new->prev = NULL;
 		new->name = name;
+		new->coords[0] = x;
+		new->coords[1] = y;
 	}
 	return (new);
 }
@@ -29,9 +33,23 @@ t_link	*new_link(t_path *room)
 	t_link	*new;
 
 	if ((new = (t_link *)malloc(sizeof(t_link))))
-	{
+    {
 		new->path = room;
 		new->next = NULL;
 	}
 	return (new);
+}
+
+t_lem   *new_lem()
+{
+    t_lem   *new;
+
+    if ((new = (t_lem *)malloc(sizeof(t_lem))))
+	{
+    	new->ants = 0;
+    	new->end = NULL;
+    	new->start = NULL;
+    	new->way = NULL;
+    }
+    return (new);
 }
