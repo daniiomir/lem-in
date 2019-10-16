@@ -14,6 +14,7 @@
 # define LEM_IN_H
 
 # include "libft.h"
+# include <stdio.h>
 
 typedef struct		s_link
 {
@@ -42,5 +43,6 @@ t_path	*new_path(char *name, int x, int y);
 t_link	*new_link(t_path *room);
 t_lem   *new_lem();
 void	read_map(t_lem *lem);
+void	error(t_lem *lem, char *error);
 
 #endif
