@@ -6,7 +6,7 @@
 /*   By: cnikia <cnikia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 18:55:19 by cnikia            #+#    #+#             */
-/*   Updated: 2019/10/15 17:39:42 by swarner          ###   ########.fr       */
+/*   Updated: 2019/10/17 17:58:38 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,17 @@ typedef struct		s_lem
 	int				ants;
 }					t_lem;
 
-t_path	*new_path(char *name, int x, int y);
-t_link	*new_link(t_path *room);
-t_lem   *new_lem();
-void	read_map(t_lem *lem);
-void	error(t_lem *lem, char *error);
+//t_path	*new_path(char *name, int x, int y);
+//t_link	*new_link(t_path *room);
+//t_lem   *new_lem();
+//void	read_map_std(t_lem *lem);
+//void	error(t_lem *lem, char *error);
+
+int		digit_check(char *str);
+
+//void	room_fill(char *str, t_lem *lem);
+
+void	init_lem(t_lem *lem);
+void	parse_map(t_lem *lem, int ret, int fd);
 
 #endif
