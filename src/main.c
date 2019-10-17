@@ -6,7 +6,7 @@
 /*   By: swarner <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 16:24:12 by swarner           #+#    #+#             */
-/*   Updated: 2019/10/17 18:01:03 by swarner          ###   ########.fr       */
+/*   Updated: 2019/10/17 18:58:52 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,35 @@ static int		first_line(t_lem *lem, char *str, int line_number)
 
 static void	fill_rooms(t_lem *lem, char *str, int *start, int *end)
 {
-	char **string;
+	t_path	*prev;
+	char	**string;
 
+	prev = NULL;
 	string = ft_strsplit(str, ' ');
 	if (*start)
 	{
 		*start = 0;
-		lem->start->name = string[0];
-		lem->start->coords[0] = ft_atoi(string[1]);
-		lem->start->coords[1] = ft_atoi(string[2]);
+		lem->start = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
 	}
 	if (*end)
 	{
 		*end = 0;
-		lem->end->name = string[0];
-		lem->end->coords[0] = ft_atoi(string[1]);
-		lem->end->coords[1] = ft_atoi(string[2]);
+		lem->end = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
+	}
+	else
+	{
+		if (!lem->way)
+			lem->way = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
+		else
+		{
+			while (lem->way)
+			{
+				prev = lem->way;
+				lem->way = lem->way->next;
+			}
+			lem->way = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
+			lem->way->prev = prev;
+		}
 	}
 	free(string[1]);
 	free(string[2]);
@@ -68,10 +81,8 @@ void	parse_map(t_lem *lem, int ret, int fd)
 				end = 1;
 				break ;
 			}
-			if (!ft_strchr(str, '-') && !ft_strchr(str, '#'))
+			if (!ft_strchr(str, '-') && str[0] != '#' && str[0] != 'L' && line_number > 1)
 				fill_rooms(lem, str, &start, &end);
-//			else if (str[0] != '#' && !ft_strchr(str, '-') && str[0] != 'L' && line_number > 1)
-//				room_fill(str, lem);
 			line_number++;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: cnikia <cnikia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 18:27:39 by cnikia            #+#    #+#             */
-/*   Updated: 2019/10/15 17:41:12 by swarner          ###   ########.fr       */
+/*   Updated: 2019/10/17 16:43:27 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,21 @@ void	init_lem(t_lem *lem)
 	lem->way = NULL;
 }
 
-//t_path	*new_path(char *name, int x, int y)
-//{
-//	t_path	*new;
-//
-//	if ((new = (t_path *)malloc(sizeof(t_path))))
-//	{
-//		new->link = NULL;
-//		new->next = NULL;
-//		new->prev = NULL;
-//		new->name = name;
-//		new->coords[0] = x;
-//		new->coords[1] = y;
-//	}
-//	return (new);
-//}
+t_path	*new_path(char *name, int x, int y)
+{
+	t_path	*new;
+
+	if ((new = (t_path *)malloc(sizeof(t_path))))
+	{
+		new->link = NULL;
+		new->next = NULL;
+		new->prev = NULL;
+		new->name = name;
+		new->coords[0] = x;
+		new->coords[1] = y;
+	}
+	return (new);
+}
 //
 //t_link	*new_link(t_path *room)
 //{

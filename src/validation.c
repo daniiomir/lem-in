@@ -6,22 +6,22 @@
 /*   By: cnikia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 16:24:44 by cnikia            #+#    #+#             */
-/*   Updated: 2019/10/17 16:50:48 by swarner          ###   ########.fr       */
+/*   Updated: 2019/10/17 17:57:55 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		room_check(char *str)
-{
-	while (*str)
-	{
-		if (!ft_isdigit(*str) && *str != ' ')
-			return (0);
-		str++;
-	}
-	return (1);
-}
+//int		room_check(char *str)
+//{
+//	while (*str)
+//	{
+//		if (!ft_isdigit(*str) && *str != ' ')
+//			return (0);
+//		str++;
+//	}
+//	return (1);
+//}
 
 int		digit_check(char *str)
 {
