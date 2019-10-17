@@ -42,7 +42,7 @@ void	error(t_lem *lem, char *error)
 				lem->way = lem->way->next;
 				if (wsd)
 				{
-					free(wsd)
+					free(wsd);
 					wsd = NULL;
 				}
 			}
@@ -50,5 +50,5 @@ void	error(t_lem *lem, char *error)
 		free(lem);
 	}
 	perror(error);
-	exit(1);
+	//exit(1);
 }

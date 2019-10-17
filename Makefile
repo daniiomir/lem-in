@@ -20,7 +20,7 @@ FLAGS = -Wall -Wextra -Werror
 SRC_FOLDER = src
 OBJ_FOLDER = obj
 
-SRC_NAMES = main.c struct.c
+SRC_NAMES = main.c struct.c validation.c error_exit.c
 
 LN_SRC = $(addprefix $(SRC_FOLDER)/, $(SRC_NAMES))
 

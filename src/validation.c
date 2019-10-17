@@ -23,9 +23,21 @@ int		room_check(char *str)
 	return (1);
 }
 
+int		digit_check(char *str)
+{
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
 void	room_fill(char *str, t_lem *lem)
 {
 	int 	a;
+	int		b;
 	int 	coords[2];
 	char 	*name;
 	t_path	*new;
@@ -37,7 +49,7 @@ void	room_fill(char *str, t_lem *lem)
 		a++;
 	if (!str[a])
 		error(lem, "invalid room parameter.");
-	if (!(name = (char *)maloc(sizeof(char) * a)))
+	if (!(name = (char *)malloc(sizeof(char) * a)))
 		error(lem, "malloc error.");
 	name[a] = '\0';
 	a = 0;
@@ -69,17 +81,6 @@ void	room_fill(char *str, t_lem *lem)
 		lem->way = new;
 }
 
-int		digit_check(char *str)
-{
-	while (*str)
-	{
-		if (!ft_isdigit(*str))
-			return (0);
-		str++;
-	}
-	return (1);
-}
-
 void	read_map(t_lem *lem)
 {
 	char	*str;
@@ -87,7 +88,7 @@ void	read_map(t_lem *lem)
 
 	str = NULL;
 	wst = 0;
-	while (get_next_line(0, str))
+	while (get_next_line(0, &str))
 	{
 		if (digit_check(str) && wst == 0)
 		{
