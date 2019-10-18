@@ -12,16 +12,11 @@
 
 #include "lem_in.h"
 
-//int		room_check(char *str)
-//{
-//	while (*str)
-//	{
-//		if (!ft_isdigit(*str) && *str != ' ')
-//			return (0);
-//		str++;
-//	}
-//	return (1);
-//}
+void	map_check(t_lem *lem)
+{
+	if (lem->ants < 0)
+		error(lem, "invalid number of ants");
+}
 
 int		digit_check(char *str)
 {
@@ -34,68 +29,78 @@ int		digit_check(char *str)
 	return (1);
 }
 
-//void	room_fill(char *str, t_lem *lem)
-//{
-//	int 	a;
-//	int		b;
-//	int 	coords[2];
-//	char 	*name;
-//	t_path	*new;
-//	t_path	*curr;
-//
-//	a = 0;
-//	b = 0;
-//	while (str[a] != ' ' && str[a])
-//		a++;
-//	if (!str[a])
-//		error(lem, "invalid room parameter.");
-//	if (!(name = (char *)malloc(sizeof(char) * a)))
-//		error(lem, "malloc error.");
-//	name[a] = '\0';
-//	a = 0;
-//	while (str[a] != ' ')
-//	{
-//		name[a] = str[a];
-//		a++;
-//	}
-//	a++;
-//	if (!room_check(str + a))
-//		error(lem, "invalid room parameter.");
-//	coords[0] = ft_atoi(str + a);
-//	while (ft_isdigit(str[a]) && str[a])
-//		a++;
-//	if (!str[a])
-//		error(lem, "invalid room parameter.");
-//	coords[1] = ft_atoi(str + a);
-//	new = new_path(name, coords[0], coords[1]);
-//	if (lem->way)
-//	{
-//		curr = lem->way;
-//		while (curr->next)
-//		{
-//			curr = curr->next;
-//		}
-//		curr->next = new;
-//	}
-//	else
-//		lem->way = new;
-//}
-//
-//void	read_map_std(t_lem *lem)
-//{
-//	char	*str;
-//	int 	wst;
-//
-//	str = NULL;
-//	wst = 0;
-//	while (get_next_line(0, &str))
-//	{
-//		if (digit_check(str) && !wst)
-//		{
-//			wst = 1;
-//			lem->ants = ft_atoi(str);
-//		}
-//		if (str[0] != '#' && !ft_strchr(str, '-') && str[0] != 'L')
-//			room_fill(str, lem);
-//	}
-//}
+static int		first_line(t_lem *lem, char *str, int line_number)
+{
+	lem->ants = ft_atoi(str);
+	return (line_number + 1);
+}
+
+static void	fill_rooms(t_lem *lem, char *str, int *start, int *end)
+{
+	t_path	*prev;
+	char	**string;
+
+	prev = NULL;
+	string = ft_strsplit(str, ' ');
+	if (*start)
+		lem->start = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
+	if (*end)
+		lem->end = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
+	if (!lem->way)
+		lem->way = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
+	else
+	{
+		while (lem->way)
+		{
+			prev = lem->way;
+			lem->way = lem->way->next;
+		}
+		lem->way = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
+		lem->way->prev = prev;
+	}
+	free(string[1]);
+	free(string[2]);
+}
+
+void	parse_map(t_lem *lem, int ret, int fd)
+{
+	int 	start;
+	int 	end;
+	int 	line_number;
+	char 	*str;
+
+	start = 0;
+	str = NULL;
+	end = 0;
+	line_number = 0;
+	while (ret > 0)
+	{
+		while ((ret = get_next_line(fd, &str)))
+		{
+			if (digit_check(str) && !line_number)
+				line_number = first_line(lem, str, line_number);
+			if (ft_strequ("##start", str))
+			{
+				if (start)
+					error(lem, "two starting rooms.");
+				start = 1;
+				break ;
+			}
+			else if (ft_strequ("##end", str))
+			{
+				if (end)
+					error(lem, "two ending rooms.");
+				end = 1;
+				break ;
+			}
+			if (!ft_strchr(str, '-') && str[0] != '#' && str[0] != 'L' && line_number > 1)
+				fill_rooms(lem, str, &start, &end);
+			line_number++;
+			if (str)
+			{
+				free(str);
+				str = NULL;
+			}
+		}
+	}
+}

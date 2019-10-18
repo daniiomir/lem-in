@@ -15,7 +15,7 @@
 
 void	init_lem(t_lem *lem)
 {
-	lem->ants = 0;
+	lem->ants = -1;
 	lem->start = NULL;
 	lem->end = NULL;
 	lem->way = NULL;
@@ -36,19 +36,19 @@ t_path	*new_path(char *name, int x, int y)
 	}
 	return (new);
 }
-//
-//t_link	*new_link(t_path *room)
-//{
-//	t_link	*new;
-//
-//	if ((new = (t_link *)malloc(sizeof(t_link))))
-//    {
-//		new->path = room;
-//		new->next = NULL;
-//	}
-//	return (new);
-//}
-//
+
+t_link	*new_link(t_path *room)
+{
+	t_link	*new;
+
+	if ((new = (t_link *)malloc(sizeof(t_link))))
+    {
+		new->path = room;
+		new->next = NULL;
+	}
+	return (new);
+}
+
 //t_lem   *new_lem()
 //{
 //    t_lem   *new;

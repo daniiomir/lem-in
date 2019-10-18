@@ -12,43 +12,81 @@
 
 #include "lem_in.h"
 
-//void	error(t_lem *lem, char *error)
-//{
-//	t_link	*wst;
-//	t_path	*wsd;
-//
-//	if (lem)
-//	{
-//		if (lem->way)
-//		{
-//			while (lem->way)
-//			{
-//				if (lem->way->link)
-//				{
-//					while (lem->way->link)
-//					{
-//						wst = lem->way->link;
-//						lem->way->link = lem->way->link->next;
-//						if (wst)
-//						{
-//							free(wst);
-//							wst = NULL;
-//						}
-//					}
-//				}
-//				if (lem->way->name)
-//					free(lem->way->name);
-//				wsd = lem->way;
-//				lem->way = lem->way->next;
-//				if (wsd)
-//				{
-//					free(wsd);
-//					wsd = NULL;
-//				}
-//			}
-//		}
-//		free(lem);
-//	}
-//	perror(error);
-//	//exit(1);
-//}
+void	error(t_lem *lem, char *error)
+{
+	t_link	*wst;
+	t_path	*wsd;
+
+	if (lem)
+	{
+		if (lem->way)
+		{
+			while (lem->way)
+			{
+				if (lem->way->link)
+				{
+					while (lem->way->link)
+					{
+						wst = lem->way->link;
+						lem->way->link = lem->way->link->next;
+						if (wst)
+						{
+							free(wst);
+							wst = NULL;
+						}
+					}
+				}
+				if (lem->way->name)
+					free(lem->way->name);
+				wsd = lem->way;
+				lem->way = lem->way->next;
+				if (wsd)
+				{
+					free(wsd);
+					wsd = NULL;
+				}
+			}
+		}
+	}
+	perror(error);
+	exit(1);
+}
+
+void	exit_lem_in(t_lem *lem)
+{
+	t_link	*wst;
+	t_path	*wsd;
+
+	if (lem)
+	{
+		if (lem->way)
+		{
+			while (lem->way)
+			{
+				if (lem->way->link)
+				{
+					while (lem->way->link)
+					{
+						wst = lem->way->link;
+						lem->way->link = lem->way->link->next;
+						if (wst)
+						{
+							free(wst);
+							wst = NULL;
+						}
+					}
+				}
+				if (lem->way->name)
+					free(lem->way->name);
+				wsd = lem->way;
+				lem->way = lem->way->next;
+				if (wsd)
+				{
+					free(wsd);
+					wsd = NULL;
+				}
+			}
+		}
+	}
+	exit(1);
+}

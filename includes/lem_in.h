@@ -40,15 +40,12 @@ typedef struct		s_lem
 }					t_lem;
 
 t_path	*new_path(char *name, int x, int y);
-//t_link	*new_link(t_path *room);
-//t_lem   *new_lem();
-//void	read_map_std(t_lem *lem);
-//void	error(t_lem *lem, char *error);
-
+t_link	*new_link(t_path *room);
+t_lem   *new_lem();
+void	map_check(t_lem *lem);
+void	error(t_lem *lem, char *error);
+void	exit_lem_in(t_lem *lem);
 int		digit_check(char *str);
-
-//void	room_fill(char *str, t_lem *lem);
-
 void	init_lem(t_lem *lem);
 void	parse_map(t_lem *lem, int ret, int fd);
 
