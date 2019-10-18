@@ -15,7 +15,7 @@
 void	map_check(t_lem *lem)
 {
 	if (lem->ants < 0)
-		error(lem, "invalid number of ants");
+		error_exit(lem, 1);
 }
 
 int		digit_check(char *str)
@@ -44,7 +44,7 @@ static void	fill_rooms(t_lem *lem, char *str, int *start, int *end)
 	string = ft_strsplit(str, ' ');
 	if (*start)
 		lem->start = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
-	if (*end)
+	else if (*end)
 		lem->end = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
 	if (!lem->way)
 		lem->way = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
@@ -82,14 +82,14 @@ void	parse_map(t_lem *lem, int ret, int fd)
 			if (ft_strequ("##start", str))
 			{
 				if (start)
-					error(lem, "two starting rooms.");
+					error_exit(lem, 1);
 				start = 1;
 				break ;
 			}
 			else if (ft_strequ("##end", str))
 			{
 				if (end)
-					error(lem, "two ending rooms.");
+					error_exit(lem, 1);
 				end = 1;
 				break ;
 			}

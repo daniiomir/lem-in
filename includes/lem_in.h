@@ -43,7 +43,7 @@ t_path	*new_path(char *name, int x, int y);
 t_link	*new_link(t_path *room);
 t_lem   *new_lem();
 void	map_check(t_lem *lem);
-void	error(t_lem *lem, char *error);
+void	error_exit(t_lem *lem, int error);
 void	exit_lem_in(t_lem *lem);
 int		digit_check(char *str);
 void	init_lem(t_lem *lem);

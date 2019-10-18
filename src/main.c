@@ -32,5 +32,5 @@ int		main(int argc, char **argv)
 		close(fd);
 	}
 	map_check(&lem);
-	exit_lem_in(&lem);
+	error_exit(&lem, 0);
 }
