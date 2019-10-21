@@ -11,11 +11,15 @@
 /* ************************************************************************** */
 
 #include "lem_in.h"
+#include "../includes/lem_in.h"
 
-void	map_check(t_lem *lem)
+static void		free_str(char **str)
 {
-	if (lem->ants < 0)
-		error_exit(lem, 1);
+	if (*str)
+	{
+		free(*str);
+		*str = NULL;
+	}
 }
 
 int		digit_check(char *str)
@@ -35,19 +39,23 @@ static int		first_line(t_lem *lem, char *str, int line_number)
 	return (line_number + 1);
 }
 
-static void	fill_rooms(t_lem *lem, char *str, int *start, int *end)
+static void	fill_rooms(t_lem *lem, char **str, int *start, int *end)
 {
 	t_path	*prev;
+	t_path	*new;
 	char	**string;
 
 	prev = NULL;
-	string = ft_strsplit(str, ' ');
-	if (*start)
-		lem->start = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
-	else if (*end)
-		lem->end = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
+	string = ft_strsplit(*str, ' ');
+	if (!(string[0]) || !(string[1]) || !(string[2]) || string[3])
+		error_exit(lem, 1);
+	new = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
+	if ((*start)++ == 1)
+		lem->start = new;
+	else if ((*end)++ == 1)
+		lem->end = new;
 	if (!lem->way)
-		lem->way = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
+		lem->way = new;
 	else
 	{
 		while (lem->way)
@@ -55,11 +63,12 @@ static void	fill_rooms(t_lem *lem, char *str, int *start, int *end)
 			prev = lem->way;
 			lem->way = lem->way->next;
 		}
-		lem->way = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
-		lem->way->prev = prev;
+		lem->way = new;
 	}
+	lem->way->prev = prev;
 	free(string[1]);
 	free(string[2]);
+	free_str(str);
 }
 
 void	parse_map(t_lem *lem, int ret, int fd)
@@ -73,34 +82,30 @@ void	parse_map(t_lem *lem, int ret, int fd)
 	str = NULL;
 	end = 0;
 	line_number = 0;
-	while (ret > 0)
+	while ((ret = get_next_line(fd, &str)))
 	{
-		while ((ret = get_next_line(fd, &str)))
+		if (digit_check(str) && !line_number)
+			line_number = first_line(lem, str, line_number);
+		if (ft_strequ("##start", str))
 		{
-			if (digit_check(str) && !line_number)
-				line_number = first_line(lem, str, line_number);
-			if (ft_strequ("##start", str))
-			{
-				if (start)
-					error_exit(lem, 1);
-				start = 1;
-				break ;
-			}
-			else if (ft_strequ("##end", str))
-			{
-				if (end)
-					error_exit(lem, 1);
-				end = 1;
-				break ;
-			}
-			if (!ft_strchr(str, '-') && str[0] != '#' && str[0] != 'L' && line_number > 1)
-				fill_rooms(lem, str, &start, &end);
-			line_number++;
-			if (str)
-			{
-				free(str);
-				str = NULL;
-			}
+			start++;
+			if (start >= 2)
+				error_exit(lem, 1);
+			free_str(&str);
+			continue ;
 		}
+		else if (ft_strequ("##end", str))
+		{
+			end++;
+			if (end >= 2)
+				error_exit(lem, 1);
+			free_str(&str);
+			continue ;
+		}
+		if (!ft_strchr(str, '-') && str[0] != '#' && str[0] != 'L' && line_number > 1)
+			fill_rooms(lem, &str, &start, &end);
+		line_number++;
+		if (ft_strchr(str, '-'))
+			add_link(lem, str);
 	}
 }

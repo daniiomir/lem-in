@@ -48,5 +48,6 @@ void	exit_lem_in(t_lem *lem);
 int		digit_check(char *str);
 void	init_lem(t_lem *lem);
 void	parse_map(t_lem *lem, int ret, int fd);
+void	add_link(t_lem *lem, char *str);
 
 #endif
