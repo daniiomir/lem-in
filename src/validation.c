@@ -6,7 +6,7 @@
 /*   By: cnikia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 16:24:44 by cnikia            #+#    #+#             */
-/*   Updated: 2019/10/17 17:57:55 by swarner          ###   ########.fr       */
+/*   Updated: 2019/10/22 16:41:59 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	fill_rooms(t_lem *lem, char **str, int *start, int *end)
 	lem->way->prev = prev;
 	free(string[1]);
 	free(string[2]);
-	free_str(str);
+	free(string);
 }
 
 void	parse_map(t_lem *lem, int ret, int fd)
@@ -107,5 +107,6 @@ void	parse_map(t_lem *lem, int ret, int fd)
 		line_number++;
 		if (ft_strchr(str, '-'))
 			add_link(lem, str);
+		free_str(&str);
 	}
 }

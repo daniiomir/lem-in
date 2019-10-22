@@ -6,7 +6,7 @@
 /*   By: cnikia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 18:28:01 by cnikia            #+#    #+#             */
-/*   Updated: 2019/10/21 18:28:08 by cnikia           ###   ########.fr       */
+/*   Updated: 2019/10/22 16:49:27 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ void	add_link(t_lem *lem, char *str)
 	t_path	*plus;
 	t_link	*wst;
 
-	string = ft_strsplit(*str, '-');
+	string = ft_strsplit(str, '-');
 	if (!(string[0]) || !(string[1]) || (string[2]))
 		error_exit(lem, 1);
 	curr = (*lem).way;
-	while ((ft_strcmp(string[0], curr->name)) || curr->prev)
+	while ((!ft_strequ(string[0], curr->name)) && curr->prev)
 		curr = curr->prev;
 	plus = (*lem).way;
-	while ((ft_strcmp(string[1], plus->name)) || curr->prev)
+	while ((!ft_strequ(string[1], plus->name)) && curr->prev)
 		plus = plus->prev;
-	if (plus->name != string[1] || curr->name != string[0])
+	if (!ft_strequ(string[0], curr->name) || !ft_strequ(string[1], plus->name))
 		error_exit(lem, 1);
 	if (!(curr->link))
 		curr->link = new_link(plus);
