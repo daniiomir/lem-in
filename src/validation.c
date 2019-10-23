@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "lem_in.h"
-#include "../includes/lem_in.h"
 
 static void		free_str(char **str)
 {
@@ -64,6 +63,7 @@ static void	fill_rooms(t_lem *lem, char **str, int *start, int *end)
 			lem->way = lem->way->next;
 		}
 		lem->way = new;
+		prev->next = new;
 	}
 	lem->way->prev = prev;
 	free(string[1]);

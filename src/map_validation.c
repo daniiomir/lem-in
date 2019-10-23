@@ -12,21 +12,54 @@
 
 #include "lem_in.h"
 
+void	find_first_way(t_way *way)
+{
+	t_way	*new;
+	t_way	*curr;
+	t_link	*link;
+
+	curr = way;
+	while (curr->next)
+		curr = curr->next;
+	link = way->room->link;
+	while (link)
+	{
+		if (!(link->path->lock))
+		{
+			new = new_way();
+			new->prev = way->room;
+			new->room = link->path;
+			new->room->lock = 1;
+			curr->next = new;
+			curr = curr->next;
+		}
+		link = link->next;
+	}
+}
+
 void	map_check(t_lem *lem)
 {
-	t_path	*wst;
+	t_way	*way;
+	t_way	*start_way;
 
 	if (lem->ants < 0)
 		error_exit(lem, 1);
-	ft_putstr((*lem).start->name);
-	ft_putchar('\n');
-	ft_putstr((*lem).end->name);
-	ft_putchar('\n');
-	wst = (*lem).way;
-	while (wst)
+	way = new_way();
+	start_way = way;
+	way->room = lem->start;
+	while (way)
 	{
-		ft_putstr(wst->name);
-		ft_putchar('\n');
-		wst = wst->prev;
+		find_first_way(way);
+		way = way->next;
 	}
+	while (start_way)
+	{
+		if (ft_strequ(start_way->room->name, lem->end->name))
+			break ;
+		start_way = start_way->next;
+	}
+	if (!start_way)
+		error_exit(lem, 1);
+	if (!(ft_strequ(start_way->room->name, lem->end->name)))
+		error_exit(lem, 1);
 }

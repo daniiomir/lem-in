@@ -26,7 +26,7 @@ void	add_link(t_lem *lem, char *str)
 	while ((!ft_strequ(string[0], curr->name)) && curr->prev)
 		curr = curr->prev;
 	plus = (*lem).way;
-	while ((!ft_strequ(string[1], plus->name)) && curr->prev)
+	while ((!ft_strequ(string[1], plus->name)) && plus->prev)
 		plus = plus->prev;
 	if (!ft_strequ(string[0], curr->name) || !ft_strequ(string[1], plus->name))
 		error_exit(lem, 1);
@@ -35,15 +35,17 @@ void	add_link(t_lem *lem, char *str)
 	else
 	{
 		wst = curr->link;
-		wst = wst->next;
-		wst = new_link(plus);
+		while (wst->next)
+			wst = wst->next;
+		wst->next = new_link(plus);
 	}
 	if (!(plus->link))
 		plus->link = new_link(curr);
 	else
 	{
 		wst = plus->link;
-		wst = wst->next;
-		wst = new_link(curr);
+		while (wst->next)
+			wst = wst->next;
+		wst->next = new_link(curr);
 	}
 }

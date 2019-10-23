@@ -45,6 +45,6 @@ void			error_exit(t_lem *lem, int error)
 {
 	free_struct(lem);
 	if (error)
-		ft_putstr("ERROR");
+		ft_putstr("ERROR\n");
 	exit(1);
 }
