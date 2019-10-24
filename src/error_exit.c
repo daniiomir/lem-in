@@ -48,3 +48,16 @@ void			error_exit(t_lem *lem, int error)
 		ft_putstr("ERROR\n");
 	exit(1);
 }
+
+void			way_erase(t_way *way)
+{
+	t_way	*wst;
+
+	while (way)
+	{
+		wst = way;
+		way = way->next;
+		free(wst);
+		wst = NULL;
+	}
+}

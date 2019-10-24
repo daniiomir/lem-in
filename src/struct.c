@@ -45,6 +45,7 @@ t_link	*new_link(t_path *room)
 	if ((new = (t_link *)malloc(sizeof(t_link))))
     {
 		new->path = room;
+		new->lock = 0;
 		new->next = NULL;
 	}
 	return (new);

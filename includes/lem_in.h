@@ -19,6 +19,7 @@
 typedef struct		s_link
 {
 	struct s_path	*path;
+	int 			lock;
 	struct s_link	*next;
 }					t_link;
 
@@ -43,7 +44,7 @@ typedef struct		s_lem
 typedef struct		s_way
 {
 	struct s_path	*room;
-	struct s_path	*prev;
+	struct s_way	*prev;
 	struct s_way	*next;
 }					t_way;
 
@@ -52,9 +53,9 @@ t_link	*new_link(t_path *room);
 t_lem   *new_lem();
 t_way	*new_way(void);
 
-void	map_check(t_lem *lem);
+t_way	*way_parse(t_lem *lem);
 void	error_exit(t_lem *lem, int error);
-void	exit_lem_in(t_lem *lem);
+void	way_erase(t_way *way);
 int		digit_check(char *str);
 void	init_lem(t_lem *lem);
 void	parse_map(t_lem *lem, int ret, int fd);
