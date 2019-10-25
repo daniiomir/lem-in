@@ -6,7 +6,7 @@
 /*   By: cnikia <cnikia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 18:55:19 by cnikia            #+#    #+#             */
-/*   Updated: 2019/10/17 17:58:54 by swarner          ###   ########.fr       */
+/*   Updated: 2019/10/25 18:34:50 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define LEM_IN_H
 
 # include "libft.h"
-# include <stdio.h>
 
 typedef struct		s_link
 {
@@ -60,5 +59,7 @@ int		digit_check(char *str);
 void	init_lem(t_lem *lem);
 void	parse_map(t_lem *lem, int ret, int fd);
 void	add_link(t_lem *lem, char *str);
+t_way	*map_check(t_lem *lem);
+void	unlock_way(t_lem *lem, t_way *way);
 
 #endif

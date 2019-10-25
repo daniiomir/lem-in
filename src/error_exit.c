@@ -6,7 +6,7 @@
 /*   By: cnikia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 16:53:41 by cnikia            #+#    #+#             */
-/*   Updated: 2019/10/17 16:06:43 by swarner          ###   ########.fr       */
+/*   Updated: 2019/10/25 19:11:33 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void			error_exit(t_lem *lem, int error)
 	free_struct(lem);
 	if (error)
 		ft_putstr("ERROR\n");
-	exit(1);
+	exit(0);
 }
 
 void			way_erase(t_way *way)
@@ -59,5 +59,15 @@ void			way_erase(t_way *way)
 		way = way->next;
 		free(wst);
 		wst = NULL;
+	}
+}
+
+void			unlock_way(t_lem *lem, t_way *way)
+{
+	while (!ft_strequ(lem->end->name, way->room->name))
+	{
+		if (way->room->lock)
+			way->room->lock = 0;
+		way = way->next;
 	}
 }

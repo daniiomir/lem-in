@@ -6,7 +6,7 @@
 /*   By: cnikia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 16:24:44 by cnikia            #+#    #+#             */
-/*   Updated: 2019/10/22 16:41:59 by swarner          ###   ########.fr       */
+/*   Updated: 2019/10/25 15:10:03 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	fill_rooms(t_lem *lem, char **str, int *start, int *end)
 
 	prev = NULL;
 	string = ft_strsplit(*str, ' ');
-	if (!(string[0]) || !(string[1]) || !(string[2]) || string[3])
+	if (!string[0] || !string[1] || !string[2] || string[3])
 		error_exit(lem, 1);
 	new = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
 	if ((*start)++ == 1)
@@ -104,9 +104,9 @@ void	parse_map(t_lem *lem, int ret, int fd)
 		}
 		if (!ft_strchr(str, '-') && str[0] != '#' && str[0] != 'L' && line_number > 1)
 			fill_rooms(lem, &str, &start, &end);
-		line_number++;
-		if (ft_strchr(str, '-'))
+		if (ft_strchr(str, '-') && str[0] != '#' && str[0] != 'L' && line_number > 1)
 			add_link(lem, str);
+		line_number++;
 		free_str(&str);
 	}
 }

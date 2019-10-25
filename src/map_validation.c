@@ -6,7 +6,7 @@
 /*   By: cnikia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 17:14:08 by cnikia            #+#    #+#             */
-/*   Updated: 2019/10/21 17:14:09 by cnikia           ###   ########.fr       */
+/*   Updated: 2019/10/25 18:36:26 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,14 @@ t_way			*way_saving(t_way *way)
 	return (new);
 }
 
-void			map_check(t_lem *lem)
+t_way			*map_check(t_lem *lem)
 {
 	t_way	*wst;
 	t_way	*way;
+	t_way	*first;
 
 	way = way_parse(lem);
-	wst =way;
+	wst = way;
 	while (wst)
 	{
 		if (ft_strequ(wst->room->name, lem->end->name))
@@ -96,6 +97,8 @@ void			map_check(t_lem *lem)
 		error_exit(lem, 1);
 	if (!(ft_strequ(wst->room->name, lem->end->name)))
 		error_exit(lem, 1);
-	way_saving(wst);
+	first = way_saving(wst);
+	unlock_way(lem, first);
 	way_erase(way);
+	return (first);
 }

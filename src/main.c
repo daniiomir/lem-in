@@ -18,6 +18,7 @@ int		main(int argc, char **argv)
 	int 	fd;
 	int 	ret;
 	t_lem	lem;
+	t_way	*ways;
 
 	if (argc > 2)
 		return (0);
@@ -31,6 +32,7 @@ int		main(int argc, char **argv)
 		parse_map(&lem, ret, fd);
 		close(fd);
 	}
-	map_check(&lem);
+	ways = map_check(&lem);
+	way_erase(ways);
 	error_exit(&lem, 0);
 }
