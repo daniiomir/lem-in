@@ -6,7 +6,7 @@
 /*   By: cnikia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 16:24:44 by cnikia            #+#    #+#             */
-/*   Updated: 2019/10/25 15:10:03 by swarner          ###   ########.fr       */
+/*   Updated: 2019/10/26 18:06:36 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ static void	fill_rooms(t_lem *lem, char **str, int *start, int *end)
 	if (!string[0] || !string[1] || !string[2] || string[3])
 		error_exit(lem, 1);
 	new = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
-	if ((*start)++ == 1)
+	if (*start && !lem->start)
 		lem->start = new;
-	else if ((*end)++ == 1)
+	else if (*end && !lem->end)
 		lem->end = new;
 	if (!lem->way)
 		lem->way = new;
@@ -69,6 +69,12 @@ static void	fill_rooms(t_lem *lem, char **str, int *start, int *end)
 	free(string[1]);
 	free(string[2]);
 	free(string);
+}
+
+void	start_end_errors(t_lem *lem, int start, int end)
+{
+	if (!start || !end)
+		error_exit(lem, 1);
 }
 
 void	parse_map(t_lem *lem, int ret, int fd)
@@ -89,7 +95,7 @@ void	parse_map(t_lem *lem, int ret, int fd)
 		if (ft_strequ("##start", str))
 		{
 			start++;
-			if (start >= 2)
+			if (start > 1)
 				error_exit(lem, 1);
 			free_str(&str);
 			continue ;
@@ -97,7 +103,7 @@ void	parse_map(t_lem *lem, int ret, int fd)
 		else if (ft_strequ("##end", str))
 		{
 			end++;
-			if (end >= 2)
+			if (end > 1)
 				error_exit(lem, 1);
 			free_str(&str);
 			continue ;
@@ -109,4 +115,5 @@ void	parse_map(t_lem *lem, int ret, int fd)
 		line_number++;
 		free_str(&str);
 	}
+	start_end_errors(lem, start, end);
 }
