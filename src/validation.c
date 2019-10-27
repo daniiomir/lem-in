@@ -6,7 +6,7 @@
 /*   By: cnikia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 16:24:44 by cnikia            #+#    #+#             */
-/*   Updated: 2019/10/27 17:10:16 by swarner          ###   ########.fr       */
+/*   Updated: 2019/10/27 18:55:13 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,18 @@ static void		free_str(char **str)
 	}
 }
 
-int		digit_check(char *str)
-{
-	while (*str)
-	{
-		if (!ft_isdigit(*str))
-			return (0);
-		str++;
-	}
-	return (1);
-}
-
 static int		first_line(t_lem *lem, char *str, int line_number)
 {
-	lem->ants = ft_atoi(str);
+	ssize_t num;
+
+	num = ft_atoi(str);
+	if (num <= 0 || num > 2147483647)
+		error_exit(lem, 1);
+	lem->ants = num;
 	return (line_number + 1);
 }
 
-static void	fill_rooms(t_lem *lem, char **str, int *start, int *end)
+static void	fill_rooms(t_lem *lem, char **str, const int *start, const int *end)
 {
 	t_path	*prev;
 	t_path	*new;
@@ -73,7 +67,7 @@ static void	fill_rooms(t_lem *lem, char **str, int *start, int *end)
 
 void	start_end_errors(t_lem *lem, int start, int end)
 {
-	if (!start || !end || !lem->ants)
+	if (!start || !end || !lem->ants || !lem->way)
 		error_exit(lem, 1);
 }
 
@@ -92,7 +86,7 @@ void	parse_map(t_lem *lem, int ret, int fd)
 	{
 		if (ret == -1)
 			error_exit(lem, 1);
-		if (digit_check(str) && !line_number)
+		if (!line_number)
 			line_number = first_line(lem, str, line_number);
 		if (ft_strequ("##start", str))
 		{
@@ -115,6 +109,7 @@ void	parse_map(t_lem *lem, int ret, int fd)
 		if (ft_strchr(str, '-') && str[0] != '#' && str[0] != 'L' && line_number > 1)
 			add_link(lem, str);
 		line_number++;
+		ft_putendl(str);
 		free_str(&str);
 	}
 	start_end_errors(lem, start, end);
