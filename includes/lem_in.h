@@ -6,7 +6,7 @@
 /*   By: cnikia <cnikia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 18:55:19 by cnikia            #+#    #+#             */
-/*   Updated: 2019/10/27 19:00:19 by swarner          ###   ########.fr       */
+/*   Updated: 2019/10/27 19:53:57 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,9 @@ void	add_link(t_lem *lem, char *str);
 t_way	*map_check(t_lem *lem);
 void	unlock_way(t_lem *lem, t_way *way);
 
-void	print_moves(char *first_room, char *second_room);
+void	print_moves(int ant_number, char *room);
+void	print_one_path(t_lem *lem);
 int 	is_one_path(t_lem *lem);
+void	ant_algorythm(t_lem *lem);
 
 #endif

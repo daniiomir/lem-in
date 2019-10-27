@@ -6,7 +6,7 @@
 #    By: swarner <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/06 16:20:04 by swarner           #+#    #+#              #
-#    Updated: 2019/10/06 16:20:06 by swarner          ###   ########.fr        #
+#    Updated: 2019/10/27 18:58:44 by swarner          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ FLAGS = -Wall -Wextra -Werror
 SRC_FOLDER = src
 OBJ_FOLDER = obj
 
-SRC_NAMES = main.c struct.c validation.c validation_2.c error_exit.c map_validation.c tools.c
+SRC_NAMES = main.c struct.c validation.c validation_2.c error_exit.c map_validation.c tools.c algorythm.c
 
 LN_SRC = $(addprefix $(SRC_FOLDER)/, $(SRC_NAMES))
 

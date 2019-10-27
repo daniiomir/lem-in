@@ -6,7 +6,7 @@
 /*   By: swarner <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 16:24:12 by swarner           #+#    #+#             */
-/*   Updated: 2019/10/27 19:32:18 by swarner          ###   ########.fr       */
+/*   Updated: 2019/10/27 19:45:36 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		main(int argc, char **argv)
 		close(fd);
 	}
 	ways = map_check(&lem);
+	ant_algorythm(&lem);
 	way_erase(ways);
 	error_exit(&lem, 0);
 }
