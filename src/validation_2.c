@@ -20,7 +20,7 @@ void	add_link(t_lem *lem, char *str)
 	t_link	*wst;
 
 	string = ft_strsplit(str, '-');
-	if (!string[0] || !string[1] || string[2])
+	if (!string[0] || !string[1] || string[2] || !lem->way)
 		error_exit(lem, 1);
 	curr = (*lem).way;
 	while ((!ft_strequ(string[0], curr->name)) && curr->prev)
