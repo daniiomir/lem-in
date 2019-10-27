@@ -6,7 +6,7 @@
 /*   By: cnikia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 16:24:44 by cnikia            #+#    #+#             */
-/*   Updated: 2019/10/26 18:06:36 by swarner          ###   ########.fr       */
+/*   Updated: 2019/10/27 17:02:43 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	fill_rooms(t_lem *lem, char **str, int *start, int *end)
 
 void	start_end_errors(t_lem *lem, int start, int end)
 {
-	if (!start || !end)
+	if (!start || !end || !lem->ants)
 		error_exit(lem, 1);
 }
 
@@ -90,6 +90,8 @@ void	parse_map(t_lem *lem, int ret, int fd)
 	line_number = 0;
 	while ((ret = get_next_line(fd, &str)))
 	{
+		if (ret == -1)
+			error_exit(lem, 1);
 		if (digit_check(str) && !line_number)
 			line_number = first_line(lem, str, line_number);
 		if (ft_strequ("##start", str))
