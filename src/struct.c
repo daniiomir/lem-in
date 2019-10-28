@@ -30,7 +30,6 @@ t_path	*new_path(char *name, int x, int y)
 		new->link = NULL;
 		new->next = NULL;
 		new->prev = NULL;
-		new->lock = 0;
 		new->name = name;
 		new->coords[0] = x;
 		new->coords[1] = y;
@@ -58,8 +57,21 @@ t_way	*new_way(void)
 	if ((new = (t_way *)malloc(sizeof(t_way))))
 	{
 		new->room = NULL;
+		new->prev_link = NULL;
 		new->next = NULL;
 		new->prev = NULL;
+	}
+	return (new);
+}
+
+t_ways	*new_ways(t_way *way)
+{
+	t_ways	*new;
+
+	if ((new = (t_ways *)malloc(sizeof(t_ways))))
+	{
+		new->way = way;
+		new->next = NULL;
 	}
 	return (new);
 }

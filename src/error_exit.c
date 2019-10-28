@@ -61,13 +61,3 @@ void			way_erase(t_way *way)
 		wst = NULL;
 	}
 }
-
-void			unlock_way(t_lem *lem, t_way *way)
-{
-	while (!ft_strequ(lem->end->name, way->room->name))
-	{
-		if (way->room->lock)
-			way->room->lock = 0;
-		way = way->next;
-	}
-}

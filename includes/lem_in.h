@@ -13,6 +13,7 @@
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
+#include <gssapi.h>
 # include "libft.h"
 
 typedef struct		s_link
@@ -26,7 +27,6 @@ typedef struct		s_path
 {
 	char			*name;
 	int 			coords[2];
-	int 			lock;
 	struct s_link	*link;
 	struct s_path	*next;
 	struct s_path	*prev;
@@ -43,28 +43,37 @@ typedef struct		s_lem
 typedef struct		s_way
 {
 	struct s_path	*room;
+	struct s_link	*prev_link;
 	struct s_way	*prev;
 	struct s_way	*next;
 }					t_way;
 
+typedef struct		s_ways
+{
+	struct s_way	*way;
+	struct s_ways	*next;
+}					t_ways;
+
 t_path	*new_path(char *name, int x, int y);
 t_link	*new_link(t_path *room);
-t_lem   *new_lem();
 t_way	*new_way(void);
+t_ways	*new_ways(t_way *way);
+
+void	error_exit(t_lem *lem, int error);
 
 t_way	*way_parse(t_lem *lem);
-void	error_exit(t_lem *lem, int error);
 void	way_erase(t_way *way);
-int		digit_check(char *str);
+t_way	*way_saving(t_way *way);
+void	way_re_lock(t_lem *lem, t_ways *ways);
+
 void	init_lem(t_lem *lem);
 void	parse_map(t_lem *lem, int ret, int fd);
 void	add_link(t_lem *lem, char *str);
 t_way	*map_check(t_lem *lem);
-void	unlock_way(t_lem *lem, t_way *way);
 
 void	print_moves(int ant_number, char *room);
 void	print_one_path(t_lem *lem);
 int 	is_one_path(t_lem *lem);
-void	ant_algorythm(t_lem *lem);
+void	ant_algorythm(t_lem *lem, t_way *first);
 
 #endif
