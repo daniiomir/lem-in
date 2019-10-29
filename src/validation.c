@@ -6,7 +6,7 @@
 /*   By: cnikia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 16:24:44 by cnikia            #+#    #+#             */
-/*   Updated: 2019/10/27 18:55:13 by swarner          ###   ########.fr       */
+/*   Updated: 2019/10/28 18:38:56 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,13 @@ void	start_end_errors(t_lem *lem, int start, int end)
 		error_exit(lem, 1);
 }
 
-void	parse_map(t_lem *lem, int ret, int fd)
+void	add_map(char **map, char *str)
+{
+	*map = ft_strjoin_free(*map, str);
+	*map = ft_strjoin_free(*map, "\n");
+}
+
+void	parse_map(t_lem *lem, int ret, int fd, char **map)
 {
 	int 	start;
 	int 	end;
@@ -93,6 +99,7 @@ void	parse_map(t_lem *lem, int ret, int fd)
 			start++;
 			if (start > 1)
 				error_exit(lem, 1);
+			add_map(map, str);
 			free_str(&str);
 			continue ;
 		}
@@ -101,6 +108,7 @@ void	parse_map(t_lem *lem, int ret, int fd)
 			end++;
 			if (end > 1)
 				error_exit(lem, 1);
+			add_map(map, str);
 			free_str(&str);
 			continue ;
 		}
@@ -109,7 +117,7 @@ void	parse_map(t_lem *lem, int ret, int fd)
 		if (ft_strchr(str, '-') && str[0] != '#' && str[0] != 'L' && line_number > 1)
 			add_link(lem, str);
 		line_number++;
-		ft_putendl(str);
+		add_map(map, str);
 		free_str(&str);
 	}
 	start_end_errors(lem, start, end);

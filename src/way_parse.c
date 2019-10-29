@@ -42,8 +42,6 @@ t_way			*way_parse(t_lem *lem)
 	t_way	*way;
 	t_way	*start_way;
 
-	if (lem->ants < 0)
-		error_exit(lem, 1);
 	way = new_way();
 	start_way = way;
 	way->room = lem->start;

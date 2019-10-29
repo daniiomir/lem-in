@@ -67,7 +67,7 @@ t_way	*way_saving(t_way *way);
 void	way_re_lock(t_lem *lem, t_ways *ways);
 
 void	init_lem(t_lem *lem);
-void	parse_map(t_lem *lem, int ret, int fd);
+void	parse_map(t_lem *lem, int ret, int fd, char **map);
 void	add_link(t_lem *lem, char *str);
 t_way	*map_check(t_lem *lem);
 

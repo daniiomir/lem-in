@@ -57,10 +57,3 @@ int 	is_one_path(t_lem *lem)
 	}
 	return (0);
 }
-
-//if (ft_strequ(paths->name, lem->start->name) || ft_strequ(paths->name, lem->end->name))
-//{
-//if (ft_strequ(links->path->name, lem->start->name) || ft_strequ(links->path->name, lem->end->name))
-//
-//}
-//
