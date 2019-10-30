@@ -35,7 +35,7 @@ int		main(int argc, char **argv)
 		close(fd);
 	}
 	first_way = map_check(&lem);
-	ant_algorythm(&lem, first_way);
+	ant_alg(&lem, first_way);
 	ft_putstr(map);
 	way_erase(first_way);
 	error_exit(&lem, 0);

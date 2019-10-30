@@ -24,8 +24,11 @@ static void		find_way(t_way *way)
 	link = way->room->link;
 	while (link)
 	{
-		if (!(link->lock))
+		if (!(link->lock) && !(way->room->block_range == 1 && link->path->block_range == 0) &&
+		!(way->room->block_range == 1 && link->path->range < way->room->range && link->path->range))
 		{
+			if (way->room->block_range == 1 && link->path->block_range == 1)
+				link->path->block_range = 0;
 			new = new_way();
 			new->prev = way;
 			new->room = link->path;
@@ -65,44 +68,27 @@ static t_link	*prev_link(t_way *way, t_way *new)
 	return (link);
 }
 
-void			way_re_lock(t_lem *lem, t_ways *ways)
+t_way			*way_lenght(t_way *way, int num)
 {
-	t_link	*wst;
-	t_path	*wsd;
-	t_ways	*wst_ways;
-	t_way	*wst_way;
+	t_way	*wst;
 
-	wsd = lem->way;
-	while (wsd)
+	wst = way;
+	while (wst)
 	{
-		wst = wsd->link;
-		while (wst)
-		{
-			wst->lock = 0;
-			wst = wst->next;
-		}
-		wsd = wsd->prev;
+		wst->lenght = num;
+		wst = wst->next;
 	}
-	wst_ways = ways;
-	while (wst_ways)
-	{
-		wst_way = wst_ways->way;
-		while (wst_way)
-		{
-			if (wst_way->prev_link)
-				wst_way->prev_link->lock = 1;
-			wst_way = wst_way->next;
-		}
-		wst_ways = wst_ways->next;
-	}
+	return (way);
 }
 
-t_way			*way_saving(t_way *way)
+t_way			*way_saving(t_way *way, t_lem *lem)
 {
 	t_way	*new;
 	t_way	*curr;
 	t_way	*wst;
+	int 	a;
 
+	a = 1;
 	new = new_way();
 	new->room = way->room;
 	way = way->prev;
@@ -112,12 +98,15 @@ t_way			*way_saving(t_way *way)
 	{
 		wst = new_way();
 		wst->room = way->room;
+		if (!ft_strequ(wst->room->name, lem->start->name))
+			wst->room->block_range = 1;
 		way = way->prev;
 		if (way)
 			wst->prev_link = prev_link(way, wst);
 		wst->prev = curr;
 		curr->next = wst;
 		curr = curr->next;
+		a++;
 	}
-	return (new);
+	return (way_lenght(new, a));
 }

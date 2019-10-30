@@ -52,3 +52,36 @@ void	add_link(t_lem *lem, char *str)
 	free(string[1]);
 	free(string);
 }
+
+void	fill_rooms(t_lem *lem, char **str, const int *start, const int *end)
+{
+	t_path	*prev;
+	t_path	*new;
+	char	**string;
+
+	prev = NULL;
+	string = ft_strsplit(*str, ' ');
+	if (!string[0] || !string[1] || !string[2] || string[3])
+		error_exit(lem, 1);
+	new = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
+	if (*start && !lem->start)
+		lem->start = new;
+	else if (*end && !lem->end)
+		lem->end = new;
+	if (!lem->way)
+		lem->way = new;
+	else
+	{
+		while (lem->way)
+		{
+			prev = lem->way;
+			lem->way = lem->way->next;
+		}
+		lem->way = new;
+		prev->next = new;
+	}
+	lem->way->prev = prev;
+	free(string[1]);
+	free(string[2]);
+	free(string);
+}

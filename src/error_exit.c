@@ -61,3 +61,14 @@ void			way_erase(t_way *way)
 		wst = NULL;
 	}
 }
+
+void			remove_ways(t_ways *ways)
+{
+	if (ways)
+	{
+		if (ways->way)
+			way_erase(ways->way);
+		free(ways);
+		ways = NULL;
+	}
+}
