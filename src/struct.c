@@ -12,7 +12,6 @@
 
 #include "lem_in.h"
 
-
 void	init_lem(t_lem *lem)
 {
 	lem->ants = -1;
@@ -45,7 +44,7 @@ t_link	*new_link(t_path *room)
 	t_link	*new;
 
 	if ((new = (t_link *)malloc(sizeof(t_link))))
-    {
+	{
 		new->path = room;
 		new->lock = 0;
 		new->next = NULL;

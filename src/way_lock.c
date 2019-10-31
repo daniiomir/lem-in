@@ -12,9 +12,10 @@
 
 #include "lem_in.h"
 
-static void		lock_ways(t_ways *ways, t_way *wst_way)
+static void		lock_ways(t_ways *ways)
 {
 	t_ways	*wst_ways;
+	t_way	*wst_way;
 
 	wst_ways = ways;
 	while (wst_ways)
@@ -34,8 +35,6 @@ void			ways_re_lock(t_lem *lem, t_ways *ways)
 {
 	t_link	*wst;
 	t_path	*wsd;
-	t_ways	*wst_ways;
-	t_way	*wst_way;
 
 	wsd = lem->way;
 	while (wsd)
@@ -48,15 +47,13 @@ void			ways_re_lock(t_lem *lem, t_ways *ways)
 		}
 		wsd = wsd->prev;
 	}
-	lock_ways(ways, wst_way);
+	lock_ways(ways);
 }
 
-void			way_re_lock(t_lem *lem)
+void			way_free_lock(t_lem *lem)
 {
 	t_link	*wst;
 	t_path	*wsd;
-	t_ways	*wst_ways;
-	t_way	*wst_way;
 
 	wsd = lem->way;
 	while (wsd)
@@ -69,5 +66,4 @@ void			way_re_lock(t_lem *lem)
 		}
 		wsd = wsd->prev;
 	}
-	//lock_ways(ways, wst_way);
 }

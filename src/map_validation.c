@@ -52,7 +52,7 @@ static void		map_range_add(t_lem *lem)
 		way = way->next;
 	}
 	way_erase(way);
-	way_re_lock(lem);
+	way_free_lock(lem);
 }
 
 t_way			*map_check(t_lem *lem)
@@ -75,7 +75,7 @@ t_way			*map_check(t_lem *lem)
 		error_exit(lem, 1);
 	first = way_saving(wst, lem);
 	way_erase(way);
-	way_re_lock(lem);
+	way_free_lock(lem);
 	map_range_add(lem);
 	return (first);
 }

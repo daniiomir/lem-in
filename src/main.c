@@ -15,9 +15,9 @@
 
 int		main(int argc, char **argv)
 {
-	int 	fd;
-	int 	ret;
-	char 	*map;
+	int		fd;
+	int		ret;
+	char	*map;
 	t_lem	lem;
 	t_way	*first_way;
 

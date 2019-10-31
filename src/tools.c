@@ -35,7 +35,7 @@ void	print_moves(int ant_number, char *room)
 	ft_putstr(" ");
 }
 
-int 	is_one_path(t_lem *lem)
+int		is_one_path(t_lem *lem)
 {
 	t_path	*paths;
 	t_link	*links;

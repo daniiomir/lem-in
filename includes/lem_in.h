@@ -67,11 +67,11 @@ void	init_lem(t_lem *lem);
 
 void	error_exit(t_lem *lem, int error);
 void	remove_ways(t_ways *ways);
+void	way_erase(t_way *way);
 
 t_way	*way_parse(t_lem *lem);
-void	way_erase(t_way *way);
 t_way	*way_saving(t_way *way, t_lem *lem);
-void	way_re_lock(t_lem *lem);
+void	way_free_lock(t_lem *lem);
 void	ways_re_lock(t_lem *lem, t_ways *ways);
 
 void	parse_map(t_lem *lem, int ret, int fd, char **map);
@@ -79,9 +79,13 @@ void	add_link(t_lem *lem, char *str);
 void	fill_rooms(t_lem *lem, char **str, const int *start, const int *end);
 t_way	*map_check(t_lem *lem);
 
+int		find_cross_ways(t_ways **ways, t_lem *lem);
+void	remove_same_edge(t_ways *ways);
+
 void	print_moves(int ant_number, char *room);
 void	print_one_path(t_lem *lem);
 int 	is_one_path(t_lem *lem);
+
 void	ant_alg(t_lem *lem, t_way *first);
 
 #endif

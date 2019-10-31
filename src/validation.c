@@ -32,24 +32,24 @@ static int		first_line(t_lem *lem, char *str, int line_number)
 	return (line_number + 1);
 }
 
-void	start_end_errors(t_lem *lem, int start, int end)
+void			start_end_errors(t_lem *lem, int start, int end)
 {
 	if (!start || !end || !lem->ants || !lem->way)
 		error_exit(lem, 1);
 }
 
-void	add_map(char **map, char *str)
+void			add_map(char **map, char *str)
 {
 	*map = ft_strjoin_free(*map, str);
 	*map = ft_strjoin_free(*map, "\n");
 }
 
-void	parse_map(t_lem *lem, int ret, int fd, char **map)
+void			parse_map(t_lem *lem, int ret, int fd, char **map)
 {
-	int 	start;
-	int 	end;
-	int 	line_number;
-	char 	*str;
+	int		start;
+	int		end;
+	int		line_number;
+	char	*str;
 
 	start = 0;
 	str = NULL;
@@ -79,9 +79,11 @@ void	parse_map(t_lem *lem, int ret, int fd, char **map)
 			free_str(&str);
 			continue ;
 		}
-		if (!ft_strchr(str, '-') && str[0] != '#' && str[0] != 'L' && line_number > 1)
+		if (!ft_strchr(str, '-') && str[0] != '#'
+		&& str[0] != 'L' && line_number > 1)
 			fill_rooms(lem, &str, &start, &end);
-		if (ft_strchr(str, '-') && str[0] != '#' && str[0] != 'L' && line_number > 1)
+		if (ft_strchr(str, '-') && str[0] != '#'
+		&& str[0] != 'L' && line_number > 1)
 			add_link(lem, str);
 		line_number++;
 		add_map(map, str);

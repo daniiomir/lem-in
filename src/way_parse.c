@@ -24,8 +24,9 @@ static void		find_way(t_way *way)
 	link = way->room->link;
 	while (link)
 	{
-		if (!(link->lock) && !(way->room->block_range == 1 && link->path->block_range == 0) &&
-		!(way->room->block_range == 1 && link->path->range < way->room->range && link->path->range))
+		if (!(link->lock) && !(way->room->block_range == 1 &&
+		link->path->block_range == 0) && !(way->room->block_range == 1
+		&& link->path->range < way->room->range && link->path->range))
 		{
 			if (way->room->block_range == 1 && link->path->block_range == 1)
 				link->path->block_range = 0;
@@ -86,7 +87,7 @@ t_way			*way_saving(t_way *way, t_lem *lem)
 	t_way	*new;
 	t_way	*curr;
 	t_way	*wst;
-	int 	a;
+	int		a;
 
 	a = 1;
 	new = new_way();
