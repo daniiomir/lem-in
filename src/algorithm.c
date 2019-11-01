@@ -6,7 +6,7 @@
 /*   By: swarner <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 19:04:43 by swarner           #+#    #+#             */
-/*   Updated: 2019/10/27 19:55:56 by swarner          ###   ########.fr       */
+/*   Updated: 2019/11/01 15:33:02 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ static t_way	*find_more_ways(t_lem *lem)
 		return (NULL);
 	if ((ft_strequ(wst->room->name, lem->end->name)))
 		clear_way = way_saving(wst, lem);
-	way_erase(way);
+	way_erase(wst);
 	return (clear_way);
 }
 
-static void		main_alg(t_lem *lem, t_way *first)
+static t_ways	*main_alg(t_lem *lem, t_way *first)
 {
 	t_ways	*ways;
 	t_ways	*new;
@@ -52,14 +52,26 @@ static void		main_alg(t_lem *lem, t_way *first)
 		curr = curr->next;
 		remove_same_edge(ways);
 		ways_re_lock(lem, ways);
+//		way_erase(wst);
 	}
 	find_cross_ways(&ways, lem);
+	return (ways);
 }
 
-void			ant_alg(t_lem *lem, t_way *first_way)
+void			ant_alg(t_lem *lem, t_way *first_way, char *map)
 {
+	t_ways	*ways;
+
+	ft_putendl(map);
 	if (is_one_path(lem))
-		print_one_path(lem);
+		print_one_path_to_end(lem);
 	else
-		main_alg(lem, first_way);
+	{
+		ways = main_alg(lem, first_way);
+		if (!ways)
+			error_exit(lem, 1);
+		print_ant_ways(lem, ways);
+//		print_full_moves(lem, ways);
+		remove_ways(ways);
+	}
 }

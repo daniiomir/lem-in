@@ -6,7 +6,7 @@
 /*   By: swarner <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 16:24:12 by swarner           #+#    #+#             */
-/*   Updated: 2019/10/28 18:36:26 by swarner          ###   ########.fr       */
+/*   Updated: 2019/11/01 15:25:34 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int		main(int argc, char **argv)
 		close(fd);
 	}
 	first_way = map_check(&lem);
-	ant_alg(&lem, first_way);
-	ft_putstr(map);
-	way_erase(first_way);
+	ant_alg(&lem, first_way, map);
+//	way_erase(first_way);
 	error_exit(&lem, 0);
 }

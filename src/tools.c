@@ -6,13 +6,13 @@
 /*   By: swarner <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 18:58:32 by swarner           #+#    #+#             */
-/*   Updated: 2019/10/27 20:00:51 by swarner          ###   ########.fr       */
+/*   Updated: 2019/11/01 13:37:10 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	print_one_path(t_lem *lem)
+void	print_one_path_to_end(t_lem *lem)
 {
 	int ant;
 
@@ -28,11 +28,13 @@ void	print_one_path(t_lem *lem)
 
 void	print_moves(int ant_number, char *room)
 {
-	ft_putstr("L");
-	ft_putnbr(ant_number);
-	ft_putstr("-");
-	ft_putstr(room);
-	ft_putstr(" ");
+	char	*move;
+
+	move = ft_strjoin_free2("L", ft_itoa(ant_number));
+	move = ft_strjoin_free(move, "-");
+	move = ft_strjoin_free(move, room);
+	move = ft_strjoin_free(move, " ");
+	ft_putstr(move);
 }
 
 int		is_one_path(t_lem *lem)

@@ -6,7 +6,7 @@
 /*   By: cnikia <cnikia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 18:55:19 by cnikia            #+#    #+#             */
-/*   Updated: 2019/10/27 19:53:57 by swarner          ###   ########.fr       */
+/*   Updated: 2019/11/01 14:36:22 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,11 @@ int		find_cross_ways(t_ways **ways, t_lem *lem);
 void	remove_same_edge(t_ways *ways);
 
 void	print_moves(int ant_number, char *room);
-void	print_one_path(t_lem *lem);
+void	print_full_moves(t_lem *lem, t_ways *ways);
+void	print_one_path_to_end(t_lem *lem);
 int 	is_one_path(t_lem *lem);
 
-void	ant_alg(t_lem *lem, t_way *first);
+void	ant_alg(t_lem *lem, t_way *first, char *map);
+void	print_ant_ways(t_lem *lem, t_ways *ways);
 
 #endif

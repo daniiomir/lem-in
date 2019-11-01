@@ -6,7 +6,7 @@
 /*   By: cnikia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 16:53:41 by cnikia            #+#    #+#             */
-/*   Updated: 2019/10/27 17:36:37 by swarner          ###   ########.fr       */
+/*   Updated: 2019/11/01 13:26:05 by swarner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,15 @@ void			way_erase(t_way *way)
 
 void			remove_ways(t_ways *ways)
 {
-	if (ways)
+	t_ways *wst;
+
+	while (ways)
 	{
+		wst = ways;
 		if (ways->way)
 			way_erase(ways->way);
-		free(ways);
-		ways = NULL;
+		ways = ways->next;
+		free(wst);
+		wst = NULL;
 	}
 }
