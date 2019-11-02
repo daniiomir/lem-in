@@ -35,6 +35,7 @@ void	print_moves(int ant_number, char *room)
 	move = ft_strjoin_free(move, room);
 	move = ft_strjoin_free(move, " ");
 	ft_putstr(move);
+	free(move);
 }
 
 int		is_one_path(t_lem *lem)

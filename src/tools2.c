@@ -31,47 +31,50 @@
 //	ft_putstr("\n");
 //}
 
-void	print_full_moves(t_lem *lem, t_ways *ways) // Эта хрень нихрена не закончена
+static t_ways	*scroll_to_start(t_ways *ways)
 {
-	int 	ant;
 	t_ways	*wst;
 
-	ant = 1;
 	wst = ways;
-	while (wst->next)
+	while (wst)
 	{
 		while (wst->way->next)
 			wst->way = wst->way->next;
-		if (wst->next)
-			wst = wst->next;
+		if (!wst->next)
+			break ;
+		wst = wst->next;
 	}
-	while (ant < lem->ants + 1)
-	{
-		print_moves(ant, wst->way->room->name);
-		while (wst)
-		{
-			wst = wst->prev;
-		}
-		ant++;
-	}
+	return (wst);
 }
 
-void	print_paths(t_lem *lem, t_way *way)
+void			print_full_moves(t_lem *lem, t_ways *ways) // Эта хрень нихрена не закончена
+{
+	int 	ant;
+	t_ways	*normal_ways;
+
+	ant = 1;
+	normal_ways = scroll_to_start(ways);
+	while (ant < lem->ants + 1)
+	{}
+	ft_putstr("\n");
+}
+
+void			print_paths(t_lem *lem, t_way *way)
 {
 	t_way	*print;
 
 	print = way;
-	ft_putstr("\n\n");
 	while (!ft_strequ(print->room->name, lem->end->name))
 	{
 		ft_putstr(print->room->name);
 		ft_putstr(" -> ");
 		print = print->prev;
 	}
-	ft_putendl(lem->end->name);
+	ft_putstr(lem->end->name);
+	ft_putstr("\n");
 }
 
-void	print_ant_ways(t_lem *lem, t_ways *ways)
+void			print_ant_ways(t_lem *lem, t_ways *ways)
 {
 	t_ways	*print;
 
@@ -83,4 +86,5 @@ void	print_ant_ways(t_lem *lem, t_ways *ways)
 		print_paths(lem, print->way);
 		print = print->next;
 	}
+	ft_putstr("\n");
 }
