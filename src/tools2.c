@@ -53,9 +53,28 @@ void			print_full_moves(t_lem *lem, t_ways *ways) // Эта хрень нихр�
 	t_ways	*normal_ways;
 
 	ant = 1;
-	normal_ways = scroll_to_start(ways);
 	while (ant < lem->ants + 1)
-	{}
+	{
+		normal_ways = scroll_to_start(ways);
+		while (normal_ways->prev)
+		{
+			normal_ways->way = normal_ways->way->prev;
+			while (normal_ways->way->prev)
+			{
+				print_moves(ant, normal_ways->way->room->name);
+				if (normal_ways->way->prev)
+					normal_ways->way = normal_ways->way->prev;
+				if (!normal_ways->way->prev)
+				{
+					print_moves(ant, lem->end->name);
+					ft_putchar('\n');
+					ant++;
+				}
+			}
+			if (normal_ways->prev)
+				normal_ways = normal_ways->prev;
+		}
+	}
 	ft_putstr("\n");
 }
 

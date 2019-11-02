@@ -71,7 +71,7 @@ void			ant_alg(t_lem *lem, t_way *first_way, char *map)
 		if (!ways)
 			error_exit(lem, 1);
 		print_ant_ways(lem, ways);
-//		print_full_moves(lem, ways);
+		print_full_moves(lem, ways);
 		remove_ways(ways);
 	}
 }
