@@ -41,6 +41,7 @@ typedef struct		s_lem
 	struct s_path	*start;
 	struct s_path	*end;
 	int				ants;
+	int 			way_count;
 }					t_lem;
 
 typedef struct		s_way
@@ -59,10 +60,20 @@ typedef struct		s_ways
 	struct s_ways	*prev;
 }					t_ways;
 
+typedef struct		s_ant
+{
+	int 			number;
+	int 			reached_end;
+	struct s_way	*way;
+}					t_ant;
+
 t_path	*new_path(char *name, int x, int y);
 t_link	*new_link(t_path *room);
 t_way	*new_way(void);
 t_ways	*new_ways(t_way *way, t_ways *prev);
+t_ant	*create_ant(int ant_number, t_way *way);
+t_ant	**create_ant_table(t_lem *lem, t_ways *way);
+void	remove_ant_table(t_lem *lem, t_ant **ant_table);
 void	init_lem(t_lem *lem);
 
 void	error_exit(t_lem *lem, int error);

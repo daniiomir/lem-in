@@ -48,11 +48,11 @@ static t_ways	*main_alg(t_lem *lem, t_way *first)
 	while ((wst = find_more_ways(lem)))
 	{
 		new = new_ways(wst, curr);
+		lem->way_count++;
 		curr->next = new;
 		curr = curr->next;
 		remove_same_edge(ways);
 		ways_re_lock(lem, ways);
-//		way_erase(wst);
 	}
 	find_cross_ways(&ways, lem);
 	return (ways);

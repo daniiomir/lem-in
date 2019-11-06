@@ -15,6 +15,7 @@
 void	init_lem(t_lem *lem)
 {
 	lem->ants = -1;
+	lem->way_count = 1;
 	lem->start = NULL;
 	lem->end = NULL;
 	lem->way = NULL;

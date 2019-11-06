@@ -12,25 +12,6 @@
 
 #include "lem_in.h"
 
-//void	print_paths(t_lem *lem, t_way *way)
-//{
-//	int ant;
-//
-//	ant = 1;
-//	way = way->prev;
-//	while (ant < lem->ants + 1)
-//	{
-//		while (!ft_strequ(way->room->name, lem->end->name))
-//		{
-//			print_moves(ant, way->room->name);
-//			way = way->prev;
-//		}
-//		print_moves(ant, lem->end->name);
-//		ant++;
-//	}
-//	ft_putstr("\n");
-//}
-
 static t_ways	*scroll_to_start(t_ways *ways)
 {
 	t_ways	*wst;
@@ -47,35 +28,98 @@ static t_ways	*scroll_to_start(t_ways *ways)
 	return (wst);
 }
 
-void			print_full_moves(t_lem *lem, t_ways *ways) // Эта хрень нихрена не закончена
-{
-	int 	ant;
-	t_ways	*normal_ways;
+//void			print_full_moves(t_lem *lem, t_ways *ways) // Эта хрень нихрена не закончена
+//{
+//	int 	ant;
+//	t_ways	*normal_ways;
+//
+//	ant = 1;
+//	while (ant < lem->ants + 1)
+//	{
+//		normal_ways = scroll_to_start(ways);
+//		while (normal_ways->prev)
+//		{
+//			normal_ways->way = normal_ways->way->prev;
+//			while (normal_ways->way->prev)
+//			{
+//				print_moves(ant, normal_ways->way->room->name);
+//				ft_putchar('\n');
+//				if (normal_ways->way->prev)
+//					normal_ways->way = normal_ways->way->prev;
+//				if (!normal_ways->way->prev)
+//				{
+//					print_moves(ant, lem->end->name);
+//					ft_putchar('\n');
+//					ant++;
+//				}
+//			}
+//			if (normal_ways->prev)
+//				normal_ways = normal_ways->prev;
+//		}
+//	}
+////	ft_putstr("\n");
+//}
 
-	ant = 1;
-	while (ant < lem->ants + 1)
+
+static	void	moves_first_part(t_lem *lem, t_ant **ant_table)
+{
+	int		j;
+	int 	z;
+
+	j = 0;
+	while (j < lem->way_count)
 	{
-		normal_ways = scroll_to_start(ways);
-		while (normal_ways->prev)
+		z = 0;
+		while (z < j)
 		{
-			normal_ways->way = normal_ways->way->prev;
-			while (normal_ways->way->prev)
-			{
-				print_moves(ant, normal_ways->way->room->name);
-				if (normal_ways->way->prev)
-					normal_ways->way = normal_ways->way->prev;
-				if (!normal_ways->way->prev)
-				{
-					print_moves(ant, lem->end->name);
-					ft_putchar('\n');
-					ant++;
-				}
-			}
-			if (normal_ways->prev)
-				normal_ways = normal_ways->prev;
+			print_moves(ant_table[z]->number, ant_table[z]->way->room->name);
+			if (ft_strequ(ant_table[z]->way->room->name, lem->end->name))
+				ant_table[z]->reached_end = 1;
+			if (ant_table[z]->way->prev)
+				ant_table[z]->way = ant_table[z]->way->prev;
+			z++;
 		}
+		ft_putchar('\n');
+		j++;
 	}
-	ft_putstr("\n");
+}
+
+static void		moves_middle_part(t_lem *lem, t_ant **ant_table)
+{
+	int 	i;
+	int		j;
+	int 	count;
+
+	i = 0;
+	while (!ant_table[lem->ants - 1]->reached_end)
+	{
+		j = 0;
+		while (ant_table[j]->reached_end)
+			j++;
+		count = lem->way_count + j;
+		while (j < count)
+		{
+			if (j == lem->ants)
+				break ;
+			print_moves(ant_table[j]->number, ant_table[j]->way->room->name);
+			if (ft_strequ(ant_table[j]->way->room->name, lem->end->name))
+				ant_table[j]->reached_end = 1;
+			if (ant_table[j]->way->prev)
+				ant_table[j]->way = ant_table[j]->way->prev;
+			j++;
+		}
+		ft_putchar('\n');
+	}
+}
+
+void			print_full_moves(t_lem *lem, t_ways *ways)
+{
+	t_ant	**ant_table;
+
+	ant_table = create_ant_table(lem, ways);
+	moves_first_part(lem, ant_table);
+	moves_middle_part(lem, ant_table);
+	remove_ant_table(lem, ant_table);
 }
 
 void			print_paths(t_lem *lem, t_way *way)

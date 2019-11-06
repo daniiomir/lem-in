@@ -23,8 +23,8 @@ static t_ways	*check_delete(t_ways *one, t_ways *two, t_lem *lem)
 		b = two->way;
 		while (b)
 		{
-			if (a->room == b->room && !(a->room ==
-			lem->start || a->room == lem->end))
+			if (a->room == b->room &&
+			!(a->room == lem->start || a->room == lem->end))
 			{
 				if (a->lenght > b->lenght)
 					return (one);
@@ -58,6 +58,7 @@ int		find_cross_ways(t_ways **ways, t_lem *lem)
 				if (delete != *ways && delete->prev)
 					delete->prev->next = delete->next;
 				remove_ways(delete);
+				lem->way_count--;
 				return (find_cross_ways(ways, lem));
 			}
 			check = check->next;

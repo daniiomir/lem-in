@@ -12,6 +12,63 @@
 
 #include "lem_in.h"
 
+t_ant	*create_ant(int ant_number, t_way *way)
+{
+	t_ant	*ant;
+
+	ant = (t_ant *)malloc(sizeof(t_ant));
+	ant->number = ant_number;
+	ant->reached_end = 0;
+	ant->way = way;
+	return (ant);
+}
+
+t_ant	**create_ant_table(t_lem *lem, t_ways *ways)
+{
+	int 	ant;
+	t_ant 	**ant_table;
+
+	ant = 1;
+	ant_table = (t_ant **)malloc(sizeof(t_ant) * lem->ants);
+	if (!ant_table)
+		return (NULL);
+	while (ant < lem->ants + 1)
+	{
+		while (ways->prev)
+		{
+			ant_table[ant - 1] = create_ant(ant, ways->way->prev);
+			ant++;
+			if (ways->prev)
+				ways = ways->prev;
+		}
+//		ant_table[ant - 1] = create_ant(ant, ways->way->prev);
+//		ant++;
+		while (ways->next)
+		{
+			if (ways->next)
+				ways = ways->next;
+		}
+	}
+	return (ant_table);
+}
+
+void	remove_ant_table(t_lem *lem, t_ant **ant_table)
+{
+	int 	i;
+
+	if (ant_table)
+	{
+		i = 0;
+		while (i < lem->ants)
+		{
+			free(ant_table[i]);
+			ant_table[i] = NULL;
+			i++;
+		}
+		free(ant_table);
+	}
+}
+
 void	print_one_path_to_end(t_lem *lem)
 {
 	int ant;
