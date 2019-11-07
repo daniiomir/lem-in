@@ -79,6 +79,7 @@ void	error_exit(t_lem *lem, int error);
 void	remove_ways(t_ways *ways);
 void	way_erase(t_way *way);
 void	way_erase_prev(t_way *way);
+void	remove_only_one_ways(t_ways *ways);
 
 t_way	*way_parse(t_lem *lem);
 t_way	*way_saving(t_way *way, t_lem *lem);

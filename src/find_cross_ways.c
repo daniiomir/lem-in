@@ -57,7 +57,9 @@ int		find_cross_ways(t_ways **ways, t_lem *lem)
 				*ways = (delete == *ways) ? (*ways)->next : *ways;
 				if (delete != *ways && delete->prev)
 					delete->prev->next = delete->next;
-				remove_ways(delete);
+				if (delete->next)
+					delete->next->prev = delete->prev;
+				remove_only_one_ways(delete);
 				lem->way_count--;
 				return (find_cross_ways(ways, lem));
 			}
