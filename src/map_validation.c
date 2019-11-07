@@ -46,10 +46,11 @@ static void		map_range_add(t_lem *lem)
 	way = new_way();
 	way->room = lem->end;
 	way->room->range = 1;
-	while (way)
+	while (way->next)
 	{
 		exec_range(way);
-		way = way->next;
+		if (way->next)
+			way = way->next;
 	}
 	way_erase(way);
 	way_free_lock(lem);

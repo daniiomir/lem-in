@@ -13,7 +13,6 @@
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
-#include <gssapi.h>
 # include "libft.h"
 
 typedef struct		s_link
@@ -79,6 +78,7 @@ void	init_lem(t_lem *lem);
 void	error_exit(t_lem *lem, int error);
 void	remove_ways(t_ways *ways);
 void	way_erase(t_way *way);
+void	way_erase_prev(t_way *way);
 
 t_way	*way_parse(t_lem *lem);
 t_way	*way_saving(t_way *way, t_lem *lem);

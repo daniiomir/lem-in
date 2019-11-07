@@ -53,6 +53,11 @@ void			way_erase(t_way *way)
 {
 	t_way	*wst;
 
+	while (way->prev)
+	{
+		if (way->prev)
+			way = way->prev;
+	}
 	while (way)
 	{
 		wst = way;
@@ -69,8 +74,7 @@ void			remove_ways(t_ways *ways)
 	while (ways)
 	{
 		wst = ways;
-		if (ways->way)
-			way_erase(ways->way);
+		way_erase(ways->way);
 		ways = ways->next;
 		free(wst);
 		wst = NULL;
