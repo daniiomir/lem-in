@@ -86,11 +86,9 @@ static	void	moves_first_part(t_lem *lem, t_ant **ant_table)
 
 static void		moves_middle_part(t_lem *lem, t_ant **ant_table)
 {
-	int 	i;
 	int		j;
 	int 	count;
 
-	i = 0;
 	while (!ant_table[lem->ants - 1]->reached_end)
 	{
 		j = 0;
