@@ -12,21 +12,21 @@
 
 #include "lem_in.h"
 
-static t_ways	*scroll_to_start(t_ways *ways)
-{
-	t_ways	*wst;
-
-	wst = ways;
-	while (wst)
-	{
-		while (wst->way->next)
-			wst->way = wst->way->next;
-		if (!wst->next)
-			break ;
-		wst = wst->next;
-	}
-	return (wst);
-}
+//static t_ways	*scroll_to_start(t_ways *ways)
+//{
+//	t_ways	*wst;
+//
+//	wst = ways;
+//	while (wst)
+//	{
+//		while (wst->way->next)
+//			wst->way = wst->way->next;
+//		if (!wst->next)
+//			break ;
+//		wst = wst->next;
+//	}
+//	return (wst);
+//}
 
 //void			print_full_moves(t_lem *lem, t_ways *ways) // Эта хрень нихрена не закончена
 //{

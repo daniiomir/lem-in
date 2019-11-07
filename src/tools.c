@@ -34,6 +34,11 @@ t_ant	**create_ant_table(t_lem *lem, t_ways *ways)
 		return (NULL);
 	while (ant < lem->ants + 1)
 	{
+		if (!ways->prev && !ways->next && ways->way)
+		{
+			ant_table[ant - 1] = create_ant(ant, ways->way->prev);
+			ant++;
+		}
 		while (ways->prev)
 		{
 			ant_table[ant - 1] = create_ant(ant, ways->way->prev);
