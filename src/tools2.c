@@ -28,39 +28,6 @@
 //	return (wst);
 //}
 
-//void			print_full_moves(t_lem *lem, t_ways *ways) // Эта хрень нихрена не закончена
-//{
-//	int 	ant;
-//	t_ways	*normal_ways;
-//
-//	ant = 1;
-//	while (ant < lem->ants + 1)
-//	{
-//		normal_ways = scroll_to_start(ways);
-//		while (normal_ways->prev)
-//		{
-//			normal_ways->way = normal_ways->way->prev;
-//			while (normal_ways->way->prev)
-//			{
-//				print_moves(ant, normal_ways->way->room->name);
-//				ft_putchar('\n');
-//				if (normal_ways->way->prev)
-//					normal_ways->way = normal_ways->way->prev;
-//				if (!normal_ways->way->prev)
-//				{
-//					print_moves(ant, lem->end->name);
-//					ft_putchar('\n');
-//					ant++;
-//				}
-//			}
-//			if (normal_ways->prev)
-//				normal_ways = normal_ways->prev;
-//		}
-//	}
-////	ft_putstr("\n");
-//}
-
-
 static	void	moves_first_part(t_lem *lem, t_ant **ant_table)
 {
 	int		j;
@@ -84,8 +51,19 @@ static	void	moves_first_part(t_lem *lem, t_ant **ant_table)
 	}
 }
 
+static void		ant_move_tool(t_lem *lem, t_ant **ant_table, int j)
+{
+	if (!ant_table[j]->reached_end)
+		print_moves(ant_table[j]->number, ant_table[j]->way->room->name);
+	if (ft_strequ(ant_table[j]->way->room->name, lem->end->name))
+		ant_table[j]->reached_end = 1;
+	if (ant_table[j]->way->prev)
+		ant_table[j]->way = ant_table[j]->way->prev;
+}
+
 static void		moves_middle_part(t_lem *lem, t_ant **ant_table)
 {
+	int		i;
 	int		j;
 	int 	count;
 
@@ -99,11 +77,13 @@ static void		moves_middle_part(t_lem *lem, t_ant **ant_table)
 		{
 			if (j == lem->ants)
 				break ;
-			print_moves(ant_table[j]->number, ant_table[j]->way->room->name);
-			if (ft_strequ(ant_table[j]->way->room->name, lem->end->name))
-				ant_table[j]->reached_end = 1;
-			if (ant_table[j]->way->prev)
-				ant_table[j]->way = ant_table[j]->way->prev;
+			ant_move_tool(lem, ant_table, j);
+//			i = j;
+//			while (i)
+//			{
+//				ant_move_tool(lem, ant_table, i);
+//				i--;
+//			}
 			j++;
 		}
 		ft_putchar('\n');
@@ -115,7 +95,7 @@ void			print_full_moves(t_lem *lem, t_ways *ways)
 	t_ant	**ant_table;
 
 	ant_table = create_ant_table(lem, ways);
-	moves_first_part(lem, ant_table);
+//	moves_first_part(lem, ant_table);
 	moves_middle_part(lem, ant_table);
 	remove_ant_table(lem, ant_table);
 }
