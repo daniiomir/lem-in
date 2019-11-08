@@ -105,10 +105,12 @@ static void		moves_many_ways_part(t_lem *lem, t_ant **ant_table, t_ways *ways)
 		temp = count * i;
 		if (ways->way->lenght - 1 < count * i)
 			temp = ways->way->lenght - 1;
+		if (lem->way_count > 1)
+			temp = (ways->way->lenght) * i;
 		j = 0;
 		while (j < temp)
 		{
-			if (ant == lem->ants)
+			if (ant == lem->ants) //|| (lem->way_count > 1 && j > temp / 2))
 				break ;
 			ant_move_tool(lem, ant_table, ant);
 			ant++;
