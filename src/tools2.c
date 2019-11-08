@@ -61,24 +61,57 @@ static void		ant_move_tool(t_lem *lem, t_ant **ant_table, int j)
 		ant_table[j]->way = ant_table[j]->way->prev;
 }
 
-static void		moves_many_ways_part(t_lem *lem, t_ant **ant_table)
+//static void		moves_many_ways_part(t_lem *lem, t_ant **ant_table, t_ways *ways)
+//{
+//	int		i;
+//	int		j;
+//	int 	count;
+//
+//	i = 1;
+//	while (!ant_table[lem->ants - 1]->reached_end)
+//	{
+//		j = 0;
+//		while (ant_table[j]->reached_end)
+//			j++;
+//		count = lem->way_count + j;
+//		while (j < count * i)
+//		{
+//			if (j == lem->ants)
+//				break ;
+//			ant_move_tool(lem, ant_table, j);
+//			j++;
+//		}
+//		i++;
+//		ft_putchar('\n');
+//	}
+//}
+
+static void		moves_many_ways_part(t_lem *lem, t_ant **ant_table, t_ways *ways)
 {
 	int		i;
 	int		j;
 	int 	count;
+	int 	temp;
+	int 	ant;
 
 	i = 1;
 	while (!ant_table[lem->ants - 1]->reached_end)
 	{
 		j = 0;
-		while (ant_table[j]->reached_end)
-			j++;
-		count = lem->way_count + j;
-		while (j < count * i)
+		ant = 0;
+		while (ant_table[ant]->reached_end)
+			ant++;
+		count = lem->way_count + ant;
+		temp = count * i;
+		if (ways->way->lenght - 1 < count * i)
+			temp = ways->way->lenght - 1;
+		j = 0;
+		while (j < temp)
 		{
-			if (j == lem->ants)
+			if (ant == lem->ants)
 				break ;
-			ant_move_tool(lem, ant_table, j);
+			ant_move_tool(lem, ant_table, ant);
+			ant++;
 			j++;
 		}
 		i++;
@@ -92,7 +125,7 @@ void			print_full_moves(t_lem *lem, t_ways *ways)
 
 	ant_table = create_ant_table(lem, ways);
 //	moves_first_part(lem, ant_table);
-	moves_many_ways_part(lem, ant_table);
+	moves_many_ways_part(lem, ant_table, ways);
 	remove_ant_table(lem, ant_table);
 }
 
