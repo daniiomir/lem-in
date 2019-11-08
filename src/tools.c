@@ -26,6 +26,7 @@ t_ant	*create_ant(int ant_number, t_way *way)
 t_ant	**create_ant_table(t_lem *lem, t_ways *ways)
 {
 	int 	ant;
+	t_ways	*wst;
 	t_ant 	**ant_table;
 
 	ant = 1;
@@ -34,25 +35,24 @@ t_ant	**create_ant_table(t_lem *lem, t_ways *ways)
 		return (NULL);
 	while (ant < lem->ants + 1)
 	{
-		if (!ways->prev && !ways->next && ways->way)
+		wst = ways;
+		if (!wst->prev && !wst->next && wst->way)
 		{
-			ant_table[ant - 1] = create_ant(ant, ways->way->prev);
+			ant_table[ant - 1] = create_ant(ant, wst->way->prev);
 			ant++;
 		}
-		while (ways->prev)
+		while (wst)
 		{
-			ant_table[ant - 1] = create_ant(ant, ways->way->prev);
+			ant_table[ant - 1] = create_ant(ant, wst->way->prev);
 			ant++;
-			if (ways->prev)
-				ways = ways->prev;
+			wst = wst->next;
 		}
 //		ant_table[ant - 1] = create_ant(ant, ways->way->prev);
 //		ant++;
-		while (ways->next)
-		{
-			if (ways->next)
-				ways = ways->next;
-		}
+//		while (wst)
+//		{
+//			wst = wst->next;
+//		}
 	}
 	return (ant_table);
 }

@@ -28,28 +28,28 @@
 //	return (wst);
 //}
 
-static	void	moves_first_part(t_lem *lem, t_ant **ant_table)
-{
-	int		j;
-	int 	z;
-
-	j = 0;
-	while (j < lem->way_count)
-	{
-		z = 0;
-		while (z < j)
-		{
-			print_moves(ant_table[z]->number, ant_table[z]->way->room->name);
-			if (ft_strequ(ant_table[z]->way->room->name, lem->end->name))
-				ant_table[z]->reached_end = 1;
-			if (ant_table[z]->way->prev)
-				ant_table[z]->way = ant_table[z]->way->prev;
-			z++;
-		}
-		ft_putchar('\n');
-		j++;
-	}
-}
+//static	void	moves_first_part(t_lem *lem, t_ant **ant_table)
+//{
+//	int		j;
+//	int 	z;
+//
+//	j = 0;
+//	while (j < lem->way_count)
+//	{
+//		z = 0;
+//		while (z < j)
+//		{
+//			print_moves(ant_table[z]->number, ant_table[z]->way->room->name);
+//			if (ft_strequ(ant_table[z]->way->room->name, lem->end->name))
+//				ant_table[z]->reached_end = 1;
+//			if (ant_table[z]->way->prev)
+//				ant_table[z]->way = ant_table[z]->way->prev;
+//			z++;
+//		}
+//		ft_putchar('\n');
+//		j++;
+//	}
+//}
 
 static void		ant_move_tool(t_lem *lem, t_ant **ant_table, int j)
 {
@@ -61,31 +61,27 @@ static void		ant_move_tool(t_lem *lem, t_ant **ant_table, int j)
 		ant_table[j]->way = ant_table[j]->way->prev;
 }
 
-static void		moves_middle_part(t_lem *lem, t_ant **ant_table)
+static void		moves_many_ways_part(t_lem *lem, t_ant **ant_table)
 {
 	int		i;
 	int		j;
 	int 	count;
 
+	i = 1;
 	while (!ant_table[lem->ants - 1]->reached_end)
 	{
 		j = 0;
 		while (ant_table[j]->reached_end)
 			j++;
 		count = lem->way_count + j;
-		while (j < count)
+		while (j < count * i)
 		{
 			if (j == lem->ants)
 				break ;
 			ant_move_tool(lem, ant_table, j);
-//			i = j;
-//			while (i)
-//			{
-//				ant_move_tool(lem, ant_table, i);
-//				i--;
-//			}
 			j++;
 		}
+		i++;
 		ft_putchar('\n');
 	}
 }
@@ -96,7 +92,7 @@ void			print_full_moves(t_lem *lem, t_ways *ways)
 
 	ant_table = create_ant_table(lem, ways);
 //	moves_first_part(lem, ant_table);
-	moves_middle_part(lem, ant_table);
+	moves_many_ways_part(lem, ant_table);
 	remove_ant_table(lem, ant_table);
 }
 
