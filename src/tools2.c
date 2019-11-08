@@ -12,45 +12,6 @@
 
 #include "lem_in.h"
 
-//static t_ways	*scroll_to_start(t_ways *ways)
-//{
-//	t_ways	*wst;
-//
-//	wst = ways;
-//	while (wst)
-//	{
-//		while (wst->way->next)
-//			wst->way = wst->way->next;
-//		if (!wst->next)
-//			break ;
-//		wst = wst->next;
-//	}
-//	return (wst);
-//}
-
-//static	void	moves_first_part(t_lem *lem, t_ant **ant_table)
-//{
-//	int		j;
-//	int 	z;
-//
-//	j = 0;
-//	while (j < lem->way_count)
-//	{
-//		z = 0;
-//		while (z < j)
-//		{
-//			print_moves(ant_table[z]->number, ant_table[z]->way->room->name);
-//			if (ft_strequ(ant_table[z]->way->room->name, lem->end->name))
-//				ant_table[z]->reached_end = 1;
-//			if (ant_table[z]->way->prev)
-//				ant_table[z]->way = ant_table[z]->way->prev;
-//			z++;
-//		}
-//		ft_putchar('\n');
-//		j++;
-//	}
-//}
-
 static void		ant_move_tool(t_lem *lem, t_ant **ant_table, int j)
 {
 	if (!ant_table[j]->reached_end)
@@ -61,62 +22,43 @@ static void		ant_move_tool(t_lem *lem, t_ant **ant_table, int j)
 		ant_table[j]->way = ant_table[j]->way->prev;
 }
 
-//static void		moves_many_ways_part(t_lem *lem, t_ant **ant_table, t_ways *ways)
-//{
-//	int		i;
-//	int		j;
-//	int 	count;
-//
-//	i = 1;
-//	while (!ant_table[lem->ants - 1]->reached_end)
-//	{
-//		j = 0;
-//		while (ant_table[j]->reached_end)
-//			j++;
-//		count = lem->way_count + j;
-//		while (j < count * i)
-//		{
-//			if (j == lem->ants)
-//				break ;
-//			ant_move_tool(lem, ant_table, j);
-//			j++;
-//		}
-//		i++;
-//		ft_putchar('\n');
-//	}
-//}
+static int 		ants_on_map(t_ways *ways)
+{
+	int 	ants_on_map;
+	t_ways	*wst;
+
+	wst = ways;
+	ants_on_map = 0;
+	while (wst)
+	{
+		ants_on_map += ways->way->lenght - 1;
+		wst = wst->next;
+	}
+	return (ants_on_map);
+}
 
 static void		moves_many_ways_part(t_lem *lem, t_ant **ant_table, t_ways *ways)
 {
-	int		i;
-	int		j;
-	int 	count;
-	int 	temp;
+	int 	i;
 	int 	ant;
+	int 	ant_on_map;
 
-	i = 1;
+	ant_on_map = 0;
 	while (!ant_table[lem->ants - 1]->reached_end)
 	{
-		j = 0;
+		i = 0;
 		ant = 0;
+		ant_on_map += lem->way_count;
 		while (ant_table[ant]->reached_end)
 			ant++;
-		count = lem->way_count + ant;
-		temp = count * i;
-		if (ways->way->lenght - 1 < count * i)
-			temp = ways->way->lenght - 1;
-		if (lem->way_count > 1)
-			temp = (ways->way->lenght) * i;
-		j = 0;
-		while (j < temp)
+		while (i < ant_on_map)
 		{
-			if (ant == lem->ants) //|| (lem->way_count > 1 && j > temp / 2))
+			if (ant == lem->ants || i == ants_on_map(ways))
 				break ;
 			ant_move_tool(lem, ant_table, ant);
 			ant++;
-			j++;
+			i++;
 		}
-		i++;
 		ft_putchar('\n');
 	}
 }
@@ -126,7 +68,6 @@ void			print_full_moves(t_lem *lem, t_ways *ways)
 	t_ant	**ant_table;
 
 	ant_table = create_ant_table(lem, ways);
-//	moves_first_part(lem, ant_table);
 	moves_many_ways_part(lem, ant_table, ways);
 	remove_ant_table(lem, ant_table);
 }
