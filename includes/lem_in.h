@@ -78,7 +78,6 @@ void	init_lem(t_lem *lem);
 void	error_exit(t_lem *lem, int error);
 void	remove_ways(t_ways *ways);
 void	way_erase(t_way *way);
-void	way_erase_prev(t_way *way);
 void	remove_only_one_ways(t_ways *ways);
 
 t_way	*way_parse(t_lem *lem);
@@ -93,6 +92,7 @@ t_way	*map_check(t_lem *lem);
 
 int		find_cross_ways(t_ways **ways, t_lem *lem);
 void	remove_same_edge(t_ways *ways);
+void	sort_by_lenght(t_ways *ways);
 
 void	print_moves(int ant_number, char *room);
 void	print_full_moves(t_lem *lem, t_ways *ways);
