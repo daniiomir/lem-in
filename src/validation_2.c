@@ -53,6 +53,20 @@ void	add_link(t_lem *lem, char *str)
 	free(string);
 }
 
+static int		check_equal_rooms(t_lem *lem, char *room_name)
+{
+	t_path	*check;
+
+	check = lem->way;
+	while (check)
+	{
+		if (ft_strequ(room_name, check->name))
+			return (1);
+		check = check->next;
+	}
+	return (0);
+}
+
 void	fill_rooms(t_lem *lem, char **str, const int *start, const int *end)
 {
 	t_path	*prev;
@@ -61,7 +75,8 @@ void	fill_rooms(t_lem *lem, char **str, const int *start, const int *end)
 
 	prev = NULL;
 	string = ft_strsplit(*str, ' ');
-	if (!string[0] || !string[1] || !string[2] || string[3])
+	if (!string[0] || !string[1] || !string[2] || string[3]
+	|| check_equal_rooms(lem, string[0]))
 		error_exit(lem, 1);
 	new = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
 	if (*start && !lem->start)
