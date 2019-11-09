@@ -69,7 +69,10 @@ static t_way	*find_more_ways(t_lem *lem)
 		wst = wst->next;
 	}
 	if (!wst)
+	{
+		way_erase(way);
 		return (NULL);
+	}
 	if ((ft_strequ(wst->room->name, lem->end->name)))
 		clear_way = way_saving(wst, lem);
 	way_erase(way);
@@ -97,7 +100,7 @@ static t_ways	*main_alg(t_lem *lem, t_way *first)
 	}
 	find_cross_ways(&ways, lem);
 	sort_by_lenght(ways);
-	find_optimal_ways(ways, lem->ants);
+	find_optimal_ways(&ways, lem->ants);
 	return (ways);
 }
 
