@@ -47,7 +47,7 @@ static int 		ants_on_map(t_ways *ways)
 	ants_on_map = 0;
 	while (wst)
 	{
-		ants_on_map += ways->way->lenght - 1;
+		ants_on_map += wst->way->lenght - 1;
 		wst = wst->next;
 	}
 	return (ants_on_map);
@@ -124,5 +124,5 @@ void			print_ant_ways(t_lem *lem, t_ways *ways)
 		print_paths(lem, print->way, 1);
 		print = print->next;
 	}
-//	ft_putstr("\n");
+	ft_putstr("\n");
 }
