@@ -98,6 +98,7 @@ static t_ways	*main_alg(t_lem *lem, t_way *first)
 		remove_same_edge(ways);
 		ways_re_lock(lem, ways);
 	}
+	parse_true_lenght(ways);
 	find_cross_ways(&ways, lem);
 	sort_by_lenght(ways);
 	find_optimal_ways(&ways, lem->ants);
