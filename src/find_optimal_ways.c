@@ -12,43 +12,77 @@
 
 #include "lem_in.h"
 
-static void		ways_swap(t_ways *check, t_ways *wst)
-{
-	t_ways	*swp;
-
-	if (check->prev && check->prev != wst)
-		check->prev->next = wst;
-	if (wst->prev && wst->prev != check)
-		wst->prev->next = check;
-	swp = check->next;
-	check->next = (wst->next == check) ? wst : wst->next;
-	if (wst->next && wst->next != check)
-		wst->next->prev = check;
-	wst->next = (swp == wst) ? check : swp;
-	if (swp)
-		swp->prev = wst;
-	swp = check->prev;
-	check->prev = (wst->prev == check) ? wst : wst->prev;
-	wst->prev = (swp == wst) ? check : swp;
-}
-
-void			sort_by_lenght(t_ways *ways)
+static void		fill_serial_number(t_ways *ways)
 {
 	t_ways	*wst;
-	t_ways	*check;
+	int 	a;
+
+	wst = ways;
+	a = 1;
+	while (wst)
+	{
+		wst->num = a;
+		a++;
+		wst = wst->next;
+	}
+}
+
+int				find_sum(t_ways *ways, t_ways *curr)
+{
+	int 	a;
+	t_ways	*wst;
+
+	a = 0;
+	wst = ways;
+	while (wst)
+	{
+		if (wst == curr)
+			break ;
+		a += wst->way->lenght;
+		wst = wst->next;
+	}
+	return (a);
+}
+
+static void		delete_un_optimal(t_ways *ways)
+{
+	t_ways	*wst;
+	t_ways	*remove;
 
 	wst = ways;
 	while (wst)
 	{
-		check = wst->next;
-		while (check)
+		if (wst->delete)
 		{
-			if (check->way->lenght < wst->way->lenght)
-			{
-				ways_swap(check, wst);
-			}
-			check = check->next;
+			if (wst->prev)
+				wst->prev->next = wst->next;
+			if (wst->next)
+				wst->next->prev = wst->prev;
+			remove = wst;
+			wst = wst->next;
+			remove_only_one_ways(remove);
+			continue ;
 		}
 		wst = wst->next;
 	}
+}
+
+void			find_optimal_ways(t_ways *ways, int ants)
+{
+	int 	l;
+	t_ways	*wst;
+
+	fill_serial_number(ways);
+	wst = ways;
+	while (wst)
+	{
+		l = wst->way->lenght;
+		l++;
+		l *= wst->num;
+		l -= find_sum(ways, wst);
+		if (ants < l)
+			wst->delete = 1;
+		wst = wst->next;
+	}
+	delete_un_optimal(ways);
 }

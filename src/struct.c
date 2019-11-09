@@ -77,6 +77,8 @@ t_ways	*new_ways(t_way *way, t_ways *prev)
 		new->way = way;
 		new->prev = prev;
 		new->next = NULL;
+		new->delete = 0;
+		new->num = 0;
 	}
 	return (new);
 }

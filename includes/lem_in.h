@@ -55,6 +55,8 @@ typedef struct		s_way
 typedef struct		s_ways
 {
 	struct s_way	*way;
+	int 			num;
+	int 			delete;
 	struct s_ways	*next;
 	struct s_ways	*prev;
 }					t_ways;
@@ -92,7 +94,7 @@ t_way	*map_check(t_lem *lem);
 
 int		find_cross_ways(t_ways **ways, t_lem *lem);
 void	remove_same_edge(t_ways *ways);
-void	sort_by_lenght(t_ways *ways);
+void	find_optimal_ways(t_ways *ways, int ants);
 
 void	print_moves(int ant_number, char *room);
 void	print_full_moves(t_lem *lem, t_ways *ways);
