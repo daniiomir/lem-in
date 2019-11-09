@@ -84,8 +84,8 @@ void			find_optimal_ways(t_ways **ways, int ants)
 		l -= find_sum(*ways, wst);
 		if (ants <= l)
 			wst->delete = 1;
-		if (wst->way->lenght < 5 || wst->way->lenght > 50)
-			wst->delete = 1;
+//		if (wst->way->lenght < 5 || wst->way->lenght > 50)
+//			wst->delete = 1;
 		wst = wst->next;
 	}
 	delete_un_optimal(ways);
