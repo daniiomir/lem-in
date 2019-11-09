@@ -47,12 +47,6 @@ t_ant	**create_ant_table(t_lem *lem, t_ways *ways)
 			ant++;
 			wst = wst->next;
 		}
-//		ant_table[ant - 1] = create_ant(ant, ways->way->prev);
-//		ant++;
-//		while (wst)
-//		{
-//			wst = wst->next;
-//		}
 	}
 	return (ant_table);
 }

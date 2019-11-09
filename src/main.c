@@ -38,4 +38,5 @@ int		main(int argc, char **argv)
 	ant_alg(&lem, first_way, map);
 //	way_erase(first_way);
 	error_exit(&lem, 0);
+
 }

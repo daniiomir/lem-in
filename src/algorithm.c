@@ -28,7 +28,10 @@ static t_way	*find_more_ways(t_lem *lem)
 		wst = wst->next;
 	}
 	if (!wst)
+	{
+		way_erase(way);
 		return (NULL);
+	}
 	if ((ft_strequ(wst->room->name, lem->end->name)))
 		clear_way = way_saving(wst, lem);
 	way_erase(way);
