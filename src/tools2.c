@@ -69,7 +69,7 @@ static void		moves_many_ways_part(t_lem *lem, t_ant **ant_table, t_ways *ways)
 			ant++;
 		while (i < ant_on_map)
 		{
-			if (ant == lem->ants || i == ants_on_map(ways) + ant)
+			if (ant == lem->ants)
 				break ;
 			ant_move_tool(lem, ant_table, ant);
 			ant++;

@@ -100,8 +100,11 @@ static t_ways	*main_alg(t_lem *lem, t_way *first)
 	}
 	parse_true_lenght(ways);
 	find_cross_ways(&ways, lem);
-	sort_by_lenght(ways);
-	find_optimal_ways(&ways, lem->ants);
+	if (lem->way_count > 1)
+	{
+		sort_by_lenght(ways);
+		find_optimal_ways(&ways, lem->ants);
+	}
 	return (ways);
 }
 
