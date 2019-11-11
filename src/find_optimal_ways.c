@@ -44,7 +44,7 @@ int				find_sum(t_ways *ways, t_ways *curr)
 	return (a);
 }
 
-static void		delete_un_optimal(t_ways **ways)
+static void		delete_un_optimal(t_ways **ways, t_lem *lem)
 {
 	t_ways	*wst;
 	t_ways	*remove;
@@ -63,13 +63,14 @@ static void		delete_un_optimal(t_ways **ways)
 				*ways = wst->next;
 			wst = wst->next;
 			remove_only_one_ways(remove);
+			(lem->way_count)--;
 			continue ;
 		}
 		wst = wst->next;
 	}
 }
 
-void			find_optimal_ways(t_ways **ways, int ants)
+void			find_optimal_ways(t_ways **ways, int ants, t_lem *lem)
 {
 	int 	l;
 	t_ways	*wst;
@@ -84,9 +85,7 @@ void			find_optimal_ways(t_ways **ways, int ants)
 		l -= find_sum(*ways, wst);
 		if (ants <= l)
 			wst->delete = 1;
-//		if (wst->way->lenght < 5 || wst->way->lenght > 50)
-//			wst->delete = 1;
 		wst = wst->next;
 	}
-	delete_un_optimal(ways);
+	delete_un_optimal(ways, lem);
 }

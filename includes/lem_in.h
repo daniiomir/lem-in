@@ -41,6 +41,7 @@ typedef struct		s_lem
 	struct s_path	*end;
 	int				ants;
 	int 			way_count;
+	int 			max_ants;
 }					t_lem;
 
 typedef struct		s_way
@@ -81,6 +82,7 @@ void	error_exit(t_lem *lem, int error);
 void	remove_ways(t_ways *ways);
 void	way_erase(t_way *way);
 void	remove_only_one_ways(t_ways *ways);
+void	remove_only_ways(t_ways *ways);
 
 t_way	*way_parse(t_lem *lem);
 t_way	*way_saving(t_way *way, t_lem *lem);
@@ -94,9 +96,11 @@ t_way	*map_check(t_lem *lem);
 
 int		find_cross_ways(t_ways **ways, t_lem *lem);
 void	remove_same_edge(t_ways *ways);
-void	find_optimal_ways(t_ways **ways, int ants);
+void	find_optimal_ways(t_ways **ways, int ants, t_lem *lem);
 void	parse_true_lenght(t_ways *ways);
+void	fill_ways_patency(t_ways *ways);
 
+void	fill_max_ants(t_lem *lem, t_ways *ways);
 void	print_moves(int ant_number, char *room);
 void	print_full_moves(t_lem *lem, t_ways *ways);
 void	print_one_path_to_end(t_lem *lem);

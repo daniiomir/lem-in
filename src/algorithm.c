@@ -32,12 +32,12 @@ static void		ways_swap(t_ways *check, t_ways *wst)
 	wst->prev = (swp == wst) ? check : swp;
 }
 
-static void		sort_by_lenght(t_ways *ways)
+static void		sort_by_lenght(t_ways **ways)
 {
 	t_ways	*wst;
 	t_ways	*check;
 
-	wst = ways;
+	wst = *ways;
 	while (wst)
 	{
 		check = wst->next;
@@ -51,6 +51,8 @@ static void		sort_by_lenght(t_ways *ways)
 		}
 		wst = wst->next;
 	}
+	while ((*ways)->prev)
+		(*ways) = (*ways)->prev;
 }
 
 static t_way	*find_more_ways(t_lem *lem)
@@ -102,8 +104,8 @@ static t_ways	*main_alg(t_lem *lem, t_way *first)
 	find_cross_ways(&ways, lem);
 	if (lem->way_count > 1)
 	{
-		sort_by_lenght(ways);
-		find_optimal_ways(&ways, lem->ants);
+		sort_by_lenght(&ways);
+		find_optimal_ways(&ways, lem->ants, lem);
 	}
 	return (ways);
 }
@@ -121,6 +123,8 @@ void			ant_alg(t_lem *lem, t_way *first_way, char *map)
 		if (!ways)
 			error_exit(lem, 1);
 		print_ant_ways(lem, ways);
+		fill_max_ants(lem, ways);
+		fill_ways_patency(ways);
 		print_full_moves(lem, ways);
 		remove_ways(ways);
 	}

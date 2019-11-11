@@ -12,6 +12,38 @@
 
 #include "lem_in.h"
 
+void		fill_ways_patency(t_ways *ways)
+{
+	t_ways	*wst;
+	t_ways	*smallest;
+
+	wst = ways;
+	smallest = ways;
+	while (wst)
+	{
+		if (wst == smallest)
+			wst = wst->next;
+		wst->num = (wst->way->lenght / smallest->way->lenght) / 4;
+		wst->num = 1;
+		wst = wst->next;
+	}
+}
+
+void		fill_max_ants(t_lem *lem, t_ways *ways)
+{
+	t_ways	*wst;
+	int 	max_ants;
+
+	wst = ways;
+	max_ants = 0;
+	while (wst)
+	{
+		max_ants += wst->way->lenght - 1;
+		wst = wst->next;
+	}
+	lem->max_ants = max_ants;
+}
+
 void		parse_true_lenght(t_ways *ways)
 {
 	t_ways	*wst;

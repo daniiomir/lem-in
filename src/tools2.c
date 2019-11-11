@@ -28,54 +28,72 @@
 //	return (wst);
 //}
 
-static void		ant_move_tool(t_lem *lem, t_ant **ant_table, int j)
+static /*t_ways	**/ void ant_move_tool(t_lem *lem, t_ant **ant_table, int j, int *max_ants/*, t_ways *check*/)
 {
+	/*t_ways	*new;
+	t_ways	*wst;
+
+	new = NULL;
+	wst = check;
+	while (wst)
+	{
+		if (wst->way == ant_table[j]->way)
+			return (NULL);
+		wst = wst->next;
+	}*/
 	if (!ant_table[j]->reached_end)
+	{
 		print_moves(ant_table[j]->number, ant_table[j]->way->room->name);
+		/*new = new_ways(ant_table[j]->way, NULL);*/
+		(*max_ants)++;
+	}
 	if (ft_strequ(ant_table[j]->way->room->name, lem->end->name))
 		ant_table[j]->reached_end = 1;
 	if (ant_table[j]->way->prev)
 		ant_table[j]->way = ant_table[j]->way->prev;
+	/*return (new);*/
 }
 
-static int 		ants_on_map(t_ways *ways)
-{
-	int 	ants_on_map;
-	t_ways	*wst;
-
-	wst = ways;
-	ants_on_map = 0;
-	while (wst)
-	{
-		ants_on_map += wst->way->lenght - 1;
-		wst = wst->next;
-	}
-	return (ants_on_map);
-}
-
-static void		moves_many_ways_part(t_lem *lem, t_ant **ant_table, t_ways *ways)
+static void		moves_many_ways_part(t_lem *lem, t_ant **ant_table)
 {
 	int 	i;
 	int 	ant;
 	int 	ant_on_map;
+	int 	max_ants;
+	int 	a;
+	/*t_ways	*check;
+	t_ways	*curr;
+	t_ways	*new;*/
 
 	ant_on_map = 0;
+	a = 0;
 	while (!ant_table[lem->ants - 1]->reached_end)
 	{
+		/*check = new_ways(NULL, NULL);
+		curr = check;*/
 		i = 0;
 		ant = 0;
+		max_ants = 0;
 		ant_on_map += lem->way_count;
 		while (ant_table[ant]->reached_end)
 			ant++;
 		while (i < ant_on_map)
 		{
+			if (max_ants >= lem->max_ants)
+				break ;
 			if (ant == lem->ants)
 				break ;
-			ant_move_tool(lem, ant_table, ant);
+			/*if ((new = */ant_move_tool(lem, ant_table, ant, &max_ants/*, check))*/);
+			/*{
+				curr->next = new;
+				curr = curr->next;*/
+				i++;/*
+			}*/
 			ant++;
-			i++;
 		}
+		/*remove_only_ways(check);*/
 		ft_putstr("\n");
+		a++;
 	}
 //	ft_putstr("\n");
 }
@@ -87,7 +105,7 @@ void			print_full_moves(t_lem *lem, t_ways *ways)
 
 //	normal_ways = scroll_to_start(ways);
 	ant_table = create_ant_table(lem, ways);
-	moves_many_ways_part(lem, ant_table, ways);
+	moves_many_ways_part(lem, ant_table);
 	remove_ant_table(lem, ant_table);
 }
 

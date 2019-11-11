@@ -53,17 +53,20 @@ void			way_erase(t_way *way)
 {
 	t_way	*wst;
 
-	while (way->prev)
+	if (way)
 	{
-		if (way->prev)
-			way = way->prev;
-	}
-	while (way)
-	{
-		wst = way;
-		way = way->next;
-		free(wst);
-		wst = NULL;
+		while (way->prev)
+		{
+			if (way->prev)
+				way = way->prev;
+		}
+		while (way)
+		{
+			wst = way;
+			way = way->next;
+			free(wst);
+			wst = NULL;
+		}
 	}
 }
 
@@ -75,6 +78,19 @@ void			remove_ways(t_ways *ways)
 	{
 		wst = ways;
 		way_erase(ways->way);
+		ways = ways->next;
+		free(wst);
+		wst = NULL;
+	}
+}
+
+void			remove_only_ways(t_ways *ways)
+{
+	t_ways *wst;
+
+	while (ways)
+	{
+		wst = ways;
 		ways = ways->next;
 		free(wst);
 		wst = NULL;

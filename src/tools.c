@@ -28,7 +28,9 @@ t_ant	**create_ant_table(t_lem *lem, t_ways *ways)
 	int 	ant;
 	t_ways	*wst;
 	t_ant 	**ant_table;
+	int 	patency;
 
+	patency = 0;
 	ant = 1;
 	ant_table = (t_ant **)malloc(sizeof(t_ant) * lem->ants);
 	if (!ant_table)
@@ -43,8 +45,13 @@ t_ant	**create_ant_table(t_lem *lem, t_ways *ways)
 		}
 		while (wst)
 		{
-			ant_table[ant - 1] = create_ant(ant, wst->way->prev);
-			ant++;
+			if (!(patency % wst->num))
+			{
+				ant_table[ant - 1] = create_ant(ant, wst->way->prev);
+				if (wst->num == 1)
+					patency++;
+				ant++;
+			}
 			wst = wst->next;
 		}
 	}
