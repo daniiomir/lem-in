@@ -12,12 +12,35 @@
 
 #include "lem_in.h"
 
+void			add_link_extern(t_path **curr, t_path **plus)
+{
+	t_link	*wst;
+
+	if (!((*curr)->link))
+		(*curr)->link = new_link(*plus);
+	else
+	{
+		wst = (*curr)->link;
+		while (wst->next)
+			wst = wst->next;
+		wst->next = new_link(*plus);
+	}
+	if (!((*plus)->link))
+		(*plus)->link = new_link(*curr);
+	else
+	{
+		wst = (*plus)->link;
+		while (wst->next)
+			wst = wst->next;
+		wst->next = new_link(*curr);
+	}
+}
+
 void			add_link(t_lem *lem, char *str)
 {
 	char	**string;
 	t_path	*curr;
 	t_path	*plus;
-	t_link	*wst;
 
 	string = ft_strsplit(str, '-');
 	if (!string[0] || !string[1] || string[2] || !lem->way)
@@ -30,24 +53,7 @@ void			add_link(t_lem *lem, char *str)
 		plus = plus->prev;
 	if (!ft_strequ(string[0], curr->name) || !ft_strequ(string[1], plus->name))
 		error_exit(lem, 1);
-	if (!(curr->link))
-		curr->link = new_link(plus);
-	else
-	{
-		wst = curr->link;
-		while (wst->next)
-			wst = wst->next;
-		wst->next = new_link(plus);
-	}
-	if (!(plus->link))
-		plus->link = new_link(curr);
-	else
-	{
-		wst = plus->link;
-		while (wst->next)
-			wst = wst->next;
-		wst->next = new_link(curr);
-	}
+	add_link_extern(&curr, &plus);
 	free(string[0]);
 	free(string[1]);
 	free(string);
@@ -67,25 +73,18 @@ static int		check_equal_rooms(t_lem *lem, char *room_name)
 	return (0);
 }
 
-void			fill_rooms(t_lem *lem, char **str,
-	const int *start, const int *end)
+void			extern_fill_rooms(t_lem *lem, const int *start,
+		const int *end, t_path **new)
 {
-	t_path	*prev;
-	t_path	*new;
-	char	**string;
+	t_path *prev;
 
 	prev = NULL;
-	string = ft_strsplit(*str, ' ');
-	if (!string[0] || !string[1] || !string[2] || string[3]
-	|| check_equal_rooms(lem, string[0]))
-		error_exit(lem, 1);
-	new = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
 	if (*start && !lem->start)
-		lem->start = new;
+		lem->start = *new;
 	else if (*end && !lem->end)
-		lem->end = new;
+		lem->end = *new;
 	if (!lem->way)
-		lem->way = new;
+		lem->way = *new;
 	else
 	{
 		while (lem->way)
@@ -93,10 +92,24 @@ void			fill_rooms(t_lem *lem, char **str,
 			prev = lem->way;
 			lem->way = lem->way->next;
 		}
-		lem->way = new;
-		prev->next = new;
+		lem->way = *new;
+		prev->next = *new;
 	}
 	lem->way->prev = prev;
+}
+
+void			fill_rooms(t_lem *lem, char **str,
+	const int *start, const int *end)
+{
+	t_path	*new;
+	char	**string;
+
+	string = ft_strsplit(*str, ' ');
+	if (!string[0] || !string[1] || !string[2] || string[3]
+	|| check_equal_rooms(lem, string[0]))
+		error_exit(lem, 1);
+	new = new_path(string[0], ft_atoi(string[1]), ft_atoi(string[2]));
+	extern_fill_rooms(lem, start, end, &new);
 	free(string[1]);
 	free(string[2]);
 	free(string);
