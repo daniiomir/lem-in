@@ -10,34 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
 #include "lem_in.h"
 
 int		main(int argc, char **argv)
 {
-	int		fd;
 	int		ret;
 	char	*map;
 	t_lem	lem;
 	t_way	*first_way;
 
-	if (argc > 2)
-	{
-		ft_putendl("ERROR");
+	if (argc > 1 && argv[1])
 		exit(0);
-	}
-	ret = 1;
-	map = ft_strnew(0);
-	init_lem(&lem);
-	if (argc == 1)
-		parse_map(&lem, ret, 0, &map);
-	else if (argc == 2)
+	else
 	{
-		fd = open(argv[1], O_RDONLY);
-		parse_map(&lem, ret, fd, &map);
-		close(fd);
+		ret = 1;
+		map = ft_strnew(0);
+		init_lem(&lem);
+		if (argc == 1)
+			parse_map(&lem, ret, 0, &map);
+		first_way = map_check(&lem);
+		ant_alg(&lem, first_way, map);
+		error_exit(&lem, 0);
 	}
-	first_way = map_check(&lem);
-	ant_alg(&lem, first_way, map);
-	error_exit(&lem, 0);
 }
