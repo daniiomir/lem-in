@@ -12,7 +12,8 @@
 
 #include "lem_in.h"
 
-static t_ways	*ant_move_tool(t_lem *lem, t_ant **ant_table, int j, int *max_ants, t_ways *check)
+static t_ways	*ant_move_tool(t_lem *lem, t_ant **ant_table,
+	int *array, t_ways *check)
 {
 	t_ways	*new;
 	t_ways	*wst;
@@ -21,20 +22,21 @@ static t_ways	*ant_move_tool(t_lem *lem, t_ant **ant_table, int j, int *max_ants
 	wst = check;
 	while (wst)
 	{
-		if (wst->way == ant_table[j]->way)
+		if (wst->way == ant_table[array[2]]->way)
 			return (NULL);
 		wst = wst->next;
 	}
-	if (!ant_table[j]->reached_end)
+	if (!ant_table[array[2]]->reached_end)
 	{
-		print_moves(ant_table[j]->number, ant_table[j]->way->room->name);
-		new = new_ways(ant_table[j]->way, NULL);
-		(*max_ants)++;
+		print_moves(ant_table[array[2]]->number,
+			ant_table[array[2]]->way->room->name);
+		new = new_ways(ant_table[array[2]]->way, NULL);
+		array[3]++;
 	}
-	if (ft_strequ(ant_table[j]->way->room->name, lem->end->name))
-		ant_table[j]->reached_end = 1;
-	if (ant_table[j]->way->prev)
-		ant_table[j]->way = ant_table[j]->way->prev;
+	if (ft_strequ(ant_table[array[2]]->way->room->name, lem->end->name))
+		ant_table[array[2]]->reached_end = 1;
+	if (ant_table[array[2]]->way->prev)
+		ant_table[array[2]]->way = ant_table[array[2]]->way->prev;
 	return (new);
 }
 
@@ -52,40 +54,47 @@ int				all_ants_done(t_ant **ant_table, t_lem *lem)
 	return (0);
 }
 
+static void		init_array(int *array)
+{
+	array[1] = 0;
+	array[2] = 0;
+	array[3] = 0;
+}
+
+static void		moves_ways_helper(t_lem *lem, int *array, t_ant **ant_table)
+{
+	array[0] += lem->way_count;
+	init_array(array);
+	while (ant_table[array[2]]->reached_end)
+		array[2]++;
+}
+
 static void		moves_many_ways_part(t_lem *lem, t_ant **ant_table)
 {
-	int		i;
-	int		ant;
-	int		ant_on_map;
-	int		max_ants;
+	int		array[4];
 	t_ways	*check;
 	t_ways	*curr;
 	t_ways	*new;
 
-	ant_on_map = 0;
+	array[0] = 0;
 	while (all_ants_done(ant_table, lem))
 	{
 		check = new_ways(NULL, NULL);
 		curr = check;
-		i = 0;
-		ant = 0;
-		max_ants = 0;
-		ant_on_map += lem->way_count;
-		while (ant_table[ant]->reached_end)
-			ant++;
-		while (i < ant_on_map)
+		moves_ways_helper(lem, array, ant_table);
+		while (array[1] < array[0])
 		{
-			if (max_ants >= lem->max_ants)
+			if (array[3] >= lem->max_ants)
 				break ;
-			if (ant == lem->ants)
+			if (array[2] == lem->ants)
 				break ;
-			if ((new = ant_move_tool(lem, ant_table, ant, &max_ants, check)))
+			if ((new = ant_move_tool(lem, ant_table, array, check)))
 			{
 				curr->next = new;
 				curr = curr->next;
-				i++;
+				array[1]++;
 			}
-			ant++;
+			array[2]++;
 		}
 		remove_only_ways(check);
 		ft_putstr("\n");
