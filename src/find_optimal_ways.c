@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-static void		fill_serial_number(t_ways *ways)
+void			fill_serial_number(t_ways *ways)
 {
 	t_ways	*wst;
 	int 	a;
@@ -27,24 +27,7 @@ static void		fill_serial_number(t_ways *ways)
 	}
 }
 
-int				find_sum(t_ways *ways, t_ways *curr)
-{
-	int 	a;
-	t_ways	*wst;
-
-	a = 0;
-	wst = ways;
-	while (wst)
-	{
-		if (wst == curr)
-			break ;
-		a += wst->way->lenght;
-		wst = wst->next;
-	}
-	return (a);
-}
-
-static void		delete_un_optimal(t_ways **ways, t_lem *lem)
+void		delete_un_optimal(t_ways **ways, t_lem *lem)
 {
 	t_ways	*wst;
 	t_ways	*remove;
@@ -70,22 +53,52 @@ static void		delete_un_optimal(t_ways **ways, t_lem *lem)
 	}
 }
 
-void			find_optimal_ways(t_ways **ways, int ants, t_lem *lem)
+int			find_lines_of_answer(t_lem *lem, t_ways *ways)
 {
-	int 	l;
 	t_ways	*wst;
+	int 	*lenght_of_path;
+	int 	*ant_count_on_path;
+	int 	a;
+	int 	ants;
+	int 	lines_of_answer;
 
-	fill_serial_number(*ways);
-	wst = *ways;
-	while (wst)
+	lenght_of_path = (int *)malloc(sizeof(int) * lem->way_count);
+	ant_count_on_path = (int *)malloc(sizeof(int) * lem->way_count);
+	lines_of_answer = 0;
+	a = -1;
+	while(a++ < lem->way_count - 1)
+		ant_count_on_path[a] = 0;
+	wst = ways;
+	a = -1;
+	while (wst && a++ < lem->way_count - 1)
 	{
-		l = wst->way->lenght;
-		l++;
-		l *= wst->num;
-		l -= find_sum(*ways, wst);
-		if (ants <= l)
-			wst->delete = 1;
+		lenght_of_path[a] = wst->way->lenght;
 		wst = wst->next;
 	}
-	delete_un_optimal(ways, lem);
+	ants = lem->ants;
+	while (ants > 0)
+	{
+		a = 0;
+		while (a < lem->way_count)
+		{
+			if (lenght_of_path[a] + ant_count_on_path[a] < lines_of_answer)
+			{
+				ant_count_on_path[a]++;
+				ants--;
+			}
+			a++;
+		}
+		lines_of_answer++;
+	}
+	if (lem->lines_of_answer > lines_of_answer || !(lem->lines_of_answer))
+	{
+		free(lem->ant_count_on_path);
+		lem->ant_count_on_path = ant_count_on_path;
+		lem->lines_of_answer = lines_of_answer;
+		free(lenght_of_path);
+		return (1);
+	}
+	free(ant_count_on_path);
+	free(lenght_of_path);
+	return (0);
 }

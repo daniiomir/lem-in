@@ -41,6 +41,8 @@ typedef struct		s_lem
 	struct s_path	*end;
 	int				ants;
 	int 			way_count;
+	int 			*ant_count_on_path;
+	int 			lines_of_answer;
 	int 			max_ants;
 }					t_lem;
 
@@ -96,9 +98,10 @@ t_way	*map_check(t_lem *lem);
 
 int		find_cross_ways(t_ways **ways, t_lem *lem);
 void	remove_same_edge(t_ways *ways);
-void	find_optimal_ways(t_ways **ways, int ants, t_lem *lem);
 void	parse_true_lenght(t_ways *ways);
-void	fill_ways_patency(t_ways *ways);
+void	fill_serial_number(t_ways *ways);
+int		find_lines_of_answer(t_lem *lem, t_ways *ways);
+void	delete_un_optimal(t_ways **ways, t_lem *lem);
 
 void	fill_max_ants(t_lem *lem, t_ways *ways);
 void	print_moves(int ant_number, char *room);

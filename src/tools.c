@@ -45,8 +45,10 @@ t_ant	**create_ant_table(t_lem *lem, t_ways *ways)
 		}
 		while (wst)
 		{
-			if (!(patency % wst->num))
+			if (patency >= wst->way->lenght - ways->way->lenght || wst->num == 1)
 			{
+				if (ant > lem->ants)
+					break ;
 				ant_table[ant - 1] = create_ant(ant, wst->way->prev);
 				if (wst->num == 1)
 					patency++;

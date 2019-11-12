@@ -19,6 +19,8 @@ static void		free_struct(t_lem *lem)
 
 	if (lem)
 	{
+		if (lem->ant_count_on_path)
+			free(lem->ant_count_on_path);
 		while (lem->way)
 		{
 			if (lem->way->link)

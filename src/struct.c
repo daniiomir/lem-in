@@ -17,6 +17,8 @@ void	init_lem(t_lem *lem)
 	lem->ants = -1;
 	lem->way_count = 1;
 	lem->max_ants = 0;
+	lem->lines_of_answer = 0;
+	lem->ant_count_on_path = NULL;
 	lem->start = NULL;
 	lem->end = NULL;
 	lem->way = NULL;

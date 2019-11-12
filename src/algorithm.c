@@ -99,14 +99,17 @@ static t_ways	*main_alg(t_lem *lem, t_way *first)
 		curr = curr->next;
 		remove_same_edge(ways);
 		ways_re_lock(lem, ways);
+		parse_true_lenght(ways);
+		if (!(find_lines_of_answer(lem, ways)))
+		{
+			new->delete = 1;
+			break ;
+		}
 	}
-	parse_true_lenght(ways);
+	delete_un_optimal(&ways, lem);
 	find_cross_ways(&ways, lem);
-	if (lem->way_count > 1)
-	{
-		sort_by_lenght(&ways);
-		find_optimal_ways(&ways, lem->ants, lem);
-	}
+	fill_serial_number(ways);
+	sort_by_lenght(&ways);
 	return (ways);
 }
 
@@ -124,7 +127,6 @@ void			ant_alg(t_lem *lem, t_way *first_way, char *map)
 			error_exit(lem, 1);
 		print_ant_ways(lem, ways);
 		fill_max_ants(lem, ways);
-		fill_ways_patency(ways);
 		print_full_moves(lem, ways);
 		remove_ways(ways);
 	}
