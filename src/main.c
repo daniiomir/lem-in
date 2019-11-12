@@ -22,7 +22,10 @@ int		main(int argc, char **argv)
 	t_way	*first_way;
 
 	if (argc > 2)
-		return (0);
+	{
+		ft_putendl("ERROR");
+		exit(0);
+	}
 	ret = 1;
 	map = ft_strnew(0);
 	init_lem(&lem);

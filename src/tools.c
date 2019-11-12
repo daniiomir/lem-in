@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-t_ant	*create_ant(int ant_number, t_way *way)
+t_ant			*create_ant(int ant_number, t_way *way)
 {
 	t_ant	*ant;
 
@@ -23,36 +23,57 @@ t_ant	*create_ant(int ant_number, t_way *way)
 	return (ant);
 }
 
-t_ant	**create_ant_table(t_lem *lem, t_ways *ways)
+static t_ant	**malloc_ant_table(int ants)
 {
-	int 	ant;
+	t_ant	**ant_table;
+
+	ant_table = (t_ant **)malloc(sizeof(t_ant) * ants);
+	if (!ant_table)
+		return (NULL);
+	return (ant_table);
+}
+
+static void		create_ant_table_helper(t_ways *wst,
+	t_ant **ant_table, int *ant)
+{
+	if (!wst->prev && !wst->next && wst->way)
+	{
+		ant_table[*ant - 1] = create_ant(*ant, wst->way->prev);
+		(*ant)++;
+	}
+}
+
+static void		fill_ant_table(t_ways *wst, t_ant **ant_table,
+	int *ant, int *patency)
+{
+	ant_table[*ant - 1] = create_ant(*ant, wst->way->prev);
+	if (wst->num == 1)
+		(*patency)++;
+	(*ant)++;
+}
+
+t_ant			**create_ant_table(t_lem *lem, t_ways *ways)
+{
+	int		ant;
 	t_ways	*wst;
-	t_ant 	**ant_table;
-	int 	patency;
+	t_ant	**ant_table;
+	int		patency;
 
 	patency = 0;
 	ant = 1;
-	ant_table = (t_ant **)malloc(sizeof(t_ant) * lem->ants);
-	if (!ant_table)
-		return (NULL);
+	ant_table = malloc_ant_table(lem->ants);
 	while (ant < lem->ants + 1)
 	{
 		wst = ways;
-		if (!wst->prev && !wst->next && wst->way)
-		{
-			ant_table[ant - 1] = create_ant(ant, wst->way->prev);
-			ant++;
-		}
+		create_ant_table_helper(wst, ant_table, &ant);
 		while (wst)
 		{
-			if (patency >= wst->way->lenght - ways->way->lenght || wst->num == 1)
+			if (patency >= wst->way->lenght - ways->way->lenght
+				|| wst->num == 1)
 			{
 				if (ant > lem->ants)
 					break ;
-				ant_table[ant - 1] = create_ant(ant, wst->way->prev);
-				if (wst->num == 1)
-					patency++;
-				ant++;
+				fill_ant_table(wst, ant_table, &ant, &patency);
 			}
 			wst = wst->next;
 		}
@@ -60,9 +81,9 @@ t_ant	**create_ant_table(t_lem *lem, t_ways *ways)
 	return (ant_table);
 }
 
-void	remove_ant_table(t_lem *lem, t_ant **ant_table)
+void			remove_ant_table(t_lem *lem, t_ant **ant_table)
 {
-	int 	i;
+	int		i;
 
 	if (ant_table)
 	{
@@ -77,7 +98,7 @@ void	remove_ant_table(t_lem *lem, t_ant **ant_table)
 	}
 }
 
-void	print_one_path_to_end(t_lem *lem)
+void			print_one_path_to_end(t_lem *lem)
 {
 	int ant;
 
@@ -91,7 +112,7 @@ void	print_one_path_to_end(t_lem *lem)
 	ft_putstr("\n");
 }
 
-void	print_moves(int ant_number, char *room)
+void			print_moves(int ant_number, char *room)
 {
 	char	*move;
 
@@ -103,7 +124,7 @@ void	print_moves(int ant_number, char *room)
 	free(move);
 }
 
-int		is_one_path(t_lem *lem)
+int				is_one_path(t_lem *lem)
 {
 	t_path	*paths;
 	t_link	*links;

@@ -15,7 +15,7 @@
 void		fill_max_ants(t_lem *lem, t_ways *ways)
 {
 	t_ways	*wst;
-	int 	max_ants;
+	int		max_ants;
 
 	wst = ways;
 	max_ants = 0;
@@ -31,7 +31,7 @@ void		parse_true_lenght(t_ways *ways)
 {
 	t_ways	*wst;
 	t_way	*parse;
-	int 	a;
+	int		a;
 
 	wst = ways;
 	while (wst)

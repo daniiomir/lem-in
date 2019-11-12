@@ -82,6 +82,12 @@ t_way			*way_lenght(t_way *way, int num)
 	return (way);
 }
 
+static void		way_saving_helper(t_way *wst, t_lem *lem)
+{
+	if (!ft_strequ(wst->room->name, lem->start->name))
+		wst->room->block_range = 1;
+}
+
 t_way			*way_saving(t_way *way, t_lem *lem)
 {
 	t_way	*new;
@@ -99,8 +105,7 @@ t_way			*way_saving(t_way *way, t_lem *lem)
 	{
 		wst = new_way();
 		wst->room = way->room;
-		if (!ft_strequ(wst->room->name, lem->start->name))
-			wst->room->block_range = 1;
+		way_saving_helper(wst, lem);
 		way = way->prev;
 		if (way)
 			wst->prev_link = prev_link(way, wst);

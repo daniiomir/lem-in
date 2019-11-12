@@ -81,6 +81,14 @@ static t_way	*find_more_ways(t_lem *lem)
 	return (clear_way);
 }
 
+static void		main_alg_helper(t_ways *ways, t_lem *lem)
+{
+	delete_un_optimal(&ways, lem);
+	find_cross_ways(&ways, lem);
+	fill_serial_number(ways);
+	sort_by_lenght(&ways);
+}
+
 static t_ways	*main_alg(t_lem *lem, t_way *first)
 {
 	t_ways	*ways;
@@ -106,10 +114,7 @@ static t_ways	*main_alg(t_lem *lem, t_way *first)
 			break ;
 		}
 	}
-	delete_un_optimal(&ways, lem);
-	find_cross_ways(&ways, lem);
-	fill_serial_number(ways);
-	sort_by_lenght(&ways);
+	main_alg_helper(ways, lem);
 	return (ways);
 }
 

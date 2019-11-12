@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-void	add_link(t_lem *lem, char *str)
+void			add_link(t_lem *lem, char *str)
 {
 	char	**string;
 	t_path	*curr;
@@ -67,7 +67,8 @@ static int		check_equal_rooms(t_lem *lem, char *room_name)
 	return (0);
 }
 
-void	fill_rooms(t_lem *lem, char **str, const int *start, const int *end)
+void			fill_rooms(t_lem *lem, char **str,
+	const int *start, const int *end)
 {
 	t_path	*prev;
 	t_path	*new;

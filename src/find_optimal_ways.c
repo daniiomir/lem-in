@@ -15,7 +15,7 @@
 void			fill_serial_number(t_ways *ways)
 {
 	t_ways	*wst;
-	int 	a;
+	int		a;
 
 	wst = ways;
 	a = 1;
@@ -27,7 +27,7 @@ void			fill_serial_number(t_ways *ways)
 	}
 }
 
-void		delete_un_optimal(t_ways **ways, t_lem *lem)
+void			delete_un_optimal(t_ways **ways, t_lem *lem)
 {
 	t_ways	*wst;
 	t_ways	*remove;
@@ -53,20 +53,20 @@ void		delete_un_optimal(t_ways **ways, t_lem *lem)
 	}
 }
 
-int			find_lines_of_answer(t_lem *lem, t_ways *ways)
+int				find_lines_of_answer(t_lem *lem, t_ways *ways)
 {
 	t_ways	*wst;
-	int 	*lenght_of_path;
-	int 	*ant_count_on_path;
-	int 	a;
-	int 	ants;
-	int 	lines_of_answer;
+	int		*lenght_of_path;
+	int		*ant_count_on_path;
+	int		a;
+	int		ants;
+	int		lines_of_answer;
 
 	lenght_of_path = (int *)malloc(sizeof(int) * lem->way_count);
 	ant_count_on_path = (int *)malloc(sizeof(int) * lem->way_count);
 	lines_of_answer = 0;
 	a = -1;
-	while(a++ < lem->way_count - 1)
+	while (a++ < lem->way_count - 1)
 		ant_count_on_path[a] = 0;
 	wst = ways;
 	a = -1;

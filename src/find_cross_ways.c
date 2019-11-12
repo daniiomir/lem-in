@@ -38,7 +38,17 @@ static t_ways	*check_delete(t_ways *one, t_ways *two, t_lem *lem)
 	return (NULL);
 }
 
-int		find_cross_ways(t_ways **ways, t_lem *lem)
+static void		find_cross_ways_helper(t_ways **ways, t_ways *delete)
+{
+	*ways = (delete == *ways) ? (*ways)->next : *ways;
+	if (delete != *ways && delete->prev)
+		delete->prev->next = delete->next;
+	if (delete->next)
+		delete->next->prev = delete->prev;
+	remove_only_one_ways(delete);
+}
+
+int				find_cross_ways(t_ways **ways, t_lem *lem)
 {
 	t_ways	*wst;
 	t_ways	*check;
@@ -54,12 +64,7 @@ int		find_cross_ways(t_ways **ways, t_lem *lem)
 		{
 			if ((delete = check_delete(wst, check, lem)))
 			{
-				*ways = (delete == *ways) ? (*ways)->next : *ways;
-				if (delete != *ways && delete->prev)
-					delete->prev->next = delete->next;
-				if (delete->next)
-					delete->next->prev = delete->prev;
-				remove_only_one_ways(delete);
+				find_cross_ways_helper(ways, delete);
 				lem->way_count--;
 				return (find_cross_ways(ways, lem));
 			}

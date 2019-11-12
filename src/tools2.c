@@ -12,22 +12,6 @@
 
 #include "lem_in.h"
 
-//static t_ways	*scroll_to_start(t_ways *ways)
-//{
-//	t_ways	*wst;
-//
-//	wst = ways;
-//	while (wst)
-//	{
-//		while (wst->way->next)
-//			wst->way = wst->way->next;
-//		if (!wst->next)
-//			break ;
-//		wst = wst->next;
-//	}
-//	return (wst);
-//}
-
 static t_ways	*ant_move_tool(t_lem *lem, t_ant **ant_table, int j, int *max_ants, t_ways *check)
 {
 	t_ways	*new;
@@ -70,10 +54,10 @@ int				all_ants_done(t_ant **ant_table, t_lem *lem)
 
 static void		moves_many_ways_part(t_lem *lem, t_ant **ant_table)
 {
-	int 	i;
-	int 	ant;
-	int 	ant_on_map;
-	int 	max_ants;
+	int		i;
+	int		ant;
+	int		ant_on_map;
+	int		max_ants;
 	t_ways	*check;
 	t_ways	*curr;
 	t_ways	*new;
@@ -106,15 +90,12 @@ static void		moves_many_ways_part(t_lem *lem, t_ant **ant_table)
 		remove_only_ways(check);
 		ft_putstr("\n");
 	}
-//	ft_putstr("\n");
 }
 
 void			print_full_moves(t_lem *lem, t_ways *ways)
 {
-//	t_ways	*normal_ways;
 	t_ant	**ant_table;
 
-//	normal_ways = scroll_to_start(ways);
 	ant_table = create_ant_table(lem, ways);
 	moves_many_ways_part(lem, ant_table);
 	remove_ant_table(lem, ant_table);
@@ -150,8 +131,7 @@ void			print_ant_ways(t_lem *lem, t_ways *ways)
 	{
 		while (print->way->next)
 			print->way = print->way->next;
-		print_paths(lem, print->way, 1);
+		print_paths(lem, print->way, 0);
 		print = print->next;
 	}
-	ft_putstr("\n");
 }

@@ -12,6 +12,18 @@
 
 #include "lem_in.h"
 
+static void		free_struct_helper(t_lem *lem)
+{
+	if (lem->way->name)
+		free(lem->way->name);
+}
+
+static void		free_wsd(t_path *wsd)
+{
+	if (wsd)
+		free(wsd);
+}
+
 static void		free_struct(t_lem *lem)
 {
 	t_link	*wst;
@@ -33,12 +45,10 @@ static void		free_struct(t_lem *lem)
 						free(wst);
 				}
 			}
-			if (lem->way->name)
-				free(lem->way->name);
+			free_struct_helper(lem);
 			wsd = lem->way;
 			lem->way = lem->way->next;
-			if (wsd)
-				free(wsd);
+			free_wsd(wsd);
 		}
 	}
 }

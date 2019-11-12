@@ -44,6 +44,23 @@ void			add_map(char **map, char *str)
 	*map = ft_strjoin_free(*map, "\n");
 }
 
+static void		first_part_check(t_lem *lem, char *str, int *line_number, int ret)
+{
+	if (ret == -1)
+		error_exit(lem, 1);
+	if (!*line_number)
+		*line_number = first_line(lem, str, *line_number);
+}
+
+static void		start_end_instructions(t_lem *lem, int *start, char *str, char **map)
+{
+	(*start)++;
+	if (*start > 1)
+		error_exit(lem, 1);
+	add_map(map, str);
+	free_str(&str);
+}
+
 void			parse_map(t_lem *lem, int ret, int fd, char **map)
 {
 	int		start;
@@ -57,26 +74,15 @@ void			parse_map(t_lem *lem, int ret, int fd, char **map)
 	line_number = 0;
 	while ((ret = get_next_line(fd, &str)))
 	{
-		if (ret == -1)
-			error_exit(lem, 1);
-		if (!line_number)
-			line_number = first_line(lem, str, line_number);
+		first_part_check(lem, str, &line_number, ret);
 		if (ft_strequ("##start", str))
 		{
-			start++;
-			if (start > 1)
-				error_exit(lem, 1);
-			add_map(map, str);
-			free_str(&str);
+			start_end_instructions(lem, &start, str, map);
 			continue ;
 		}
 		else if (ft_strequ("##end", str))
 		{
-			end++;
-			if (end > 1)
-				error_exit(lem, 1);
-			add_map(map, str);
-			free_str(&str);
+			start_end_instructions(lem, &end, str, map);
 			continue ;
 		}
 		if (!ft_strchr(str, '-') && str[0] != '#'
