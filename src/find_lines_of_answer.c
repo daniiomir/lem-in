@@ -12,13 +12,19 @@
 
 #include "lem_in.h"
 
-static int		*init_lenght_of_path(t_ways *ways, t_lem *lem)
+static int		*init_lenght_of_path(t_ways *ways, t_lem *lem, int *ant_count)
 {
 	t_ways	*wst;
 	int		*lenght_of_path;
 	int		a;
 
-	lenght_of_path = (int *)malloc(sizeof(int) * lem->way_count);
+	if (!(lenght_of_path = (int *)malloc(sizeof(int) * lem->way_count)))
+	{
+		remove_ways(ways);
+		if (ant_count)
+			free(ant_count);
+		error_exit(lem, 1);
+	}
 	wst = ways;
 	a = -1;
 	while (wst && a++ < lem->way_count - 1)
@@ -30,14 +36,18 @@ static int		*init_lenght_of_path(t_ways *ways, t_lem *lem)
 }
 
 static int		*init_ant_count_on_path(t_lem *lem,
-		int *lines_of_answer, int *ants)
+		int *lines_of_answer, int *ants, t_ways *ways)
 {
 	int		*ant_count_on_path;
 	int		a;
 
 	*lines_of_answer = 0;
 	*ants = lem->ants;
-	ant_count_on_path = (int *)malloc(sizeof(int) * lem->way_count);
+	if (!(ant_count_on_path = (int *)malloc(sizeof(int) * lem->way_count)))
+	{
+		remove_ways(ways);
+		error_exit(lem, 1);
+	}
 	a = -1;
 	while (a++ < lem->way_count - 1)
 		ant_count_on_path[a] = 0;
@@ -56,8 +66,10 @@ static int		exit_one(t_lem *lem, int **ant_count_on_path,
 
 static int		exit_zero(int **ant_count_on_path, int **lenght_of_path)
 {
-	free(*ant_count_on_path);
-	free(*lenght_of_path);
+	if (*ant_count_on_path)
+		free(*ant_count_on_path);
+	if (*lenght_of_path)
+		free(*lenght_of_path);
 	return (0);
 }
 
@@ -69,8 +81,8 @@ int				find_lines_of_answer(t_lem *lem, t_ways *ways)
 	int		ants;
 	int		lines_of_answer;
 
-	lenght_of_path = init_lenght_of_path(ways, lem);
-	ant_count = init_ant_count_on_path(lem, &lines_of_answer, &ants);
+	ant_count = init_ant_count_on_path(lem, &lines_of_answer, &ants, ways);
+	lenght_of_path = init_lenght_of_path(ways, lem, ant_count);
 	while (ants > 0)
 	{
 		a = 0;
