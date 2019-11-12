@@ -12,38 +12,6 @@
 
 #include "lem_in.h"
 
-static void		free_str(char **str)
-{
-	if (*str)
-	{
-		free(*str);
-		*str = NULL;
-	}
-}
-
-static int		first_line(t_lem *lem, char *str, int line_number)
-{
-	ssize_t num;
-
-	num = ft_atoi(str);
-	if (num <= 0 || num > 2147483647)
-		error_exit(lem, 1);
-	lem->ants = num;
-	return (line_number + 1);
-}
-
-void			start_end_errors(t_lem *lem, int start, int end)
-{
-	if (!start || !end || !lem->ants || !lem->way)
-		error_exit(lem, 1);
-}
-
-void			add_map(char **map, char *str)
-{
-	*map = ft_strjoin_free(*map, str);
-	*map = ft_strjoin_free(*map, "\n");
-}
-
 static void		first_part_check(t_lem *lem, char *str,
 	int *line_number, int ret)
 {

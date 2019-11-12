@@ -87,11 +87,16 @@ void				remove_only_one_ways(t_ways *ways);
 void				remove_only_ways(t_ways *ways);
 
 t_way				*way_parse(t_lem *lem);
+void				find_way(t_way *way);
 t_way				*way_saving(t_way *way, t_lem *lem);
 void				way_free_lock(t_lem *lem);
 void				ways_re_lock(t_lem *lem, t_ways *ways);
 
 void				parse_map(t_lem *lem, int ret, int fd, char **map);
+void				free_str(char **str);
+int					first_line(t_lem *lem, char *str, int line_number);
+void				start_end_errors(t_lem *lem, int start, int end);
+void				add_map(char **map, char *str);
 void				add_link(t_lem *lem, char *str);
 void				fill_rooms(t_lem *lem, char **str,
 						const int *start, const int *end);
@@ -103,6 +108,7 @@ void				parse_true_lenght(t_ways *ways);
 void				fill_serial_number(t_ways *ways);
 int					find_lines_of_answer(t_lem *lem, t_ways *ways);
 void				delete_un_optimal(t_ways **ways, t_lem *lem);
+void				sort_by_lenght(t_ways **ways);
 
 void				fill_max_ants(t_lem *lem, t_ways *ways);
 void				print_moves(int ant_number, char *room);

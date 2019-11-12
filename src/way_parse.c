@@ -12,35 +12,6 @@
 
 #include "lem_in.h"
 
-static void		find_way(t_way *way)
-{
-	t_way	*new;
-	t_way	*curr;
-	t_link	*link;
-
-	curr = way;
-	while (curr->next)
-		curr = curr->next;
-	link = way->room->link;
-	while (link)
-	{
-		if (!(link->lock) && !(way->room->block_range == 1 &&
-		link->path->block_range == 0) && !(way->room->block_range == 1
-		&& link->path->range < way->room->range && link->path->range))
-		{
-			if (way->room->block_range == 1 && link->path->block_range == 1)
-				link->path->block_range = 0;
-			new = new_way();
-			new->prev = way;
-			new->room = link->path;
-			link->lock = 1;
-			curr->next = new;
-			curr = curr->next;
-		}
-		link = link->next;
-	}
-}
-
 t_way			*way_parse(t_lem *lem)
 {
 	t_way	*way;
@@ -69,7 +40,7 @@ static t_link	*prev_link(t_way *way, t_way *new)
 	return (link);
 }
 
-t_way			*way_lenght(t_way *way, int num)
+static t_way	*way_lenght(t_way *way, int num)
 {
 	t_way	*wst;
 

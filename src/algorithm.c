@@ -12,49 +12,6 @@
 
 #include "lem_in.h"
 
-static void		ways_swap(t_ways *check, t_ways *wst)
-{
-	t_ways	*swp;
-
-	if (check->prev && check->prev != wst)
-		check->prev->next = wst;
-	if (wst->prev && wst->prev != check)
-		wst->prev->next = check;
-	swp = check->next;
-	check->next = (wst->next == check) ? wst : wst->next;
-	if (wst->next && wst->next != check)
-		wst->next->prev = check;
-	wst->next = (swp == wst) ? check : swp;
-	if (swp)
-		swp->prev = wst;
-	swp = check->prev;
-	check->prev = (wst->prev == check) ? wst : wst->prev;
-	wst->prev = (swp == wst) ? check : swp;
-}
-
-static void		sort_by_lenght(t_ways **ways)
-{
-	t_ways	*wst;
-	t_ways	*check;
-
-	wst = *ways;
-	while (wst)
-	{
-		check = wst->next;
-		while (check)
-		{
-			if (check->way->lenght < wst->way->lenght)
-			{
-				ways_swap(check, wst);
-			}
-			check = check->next;
-		}
-		wst = wst->next;
-	}
-	while ((*ways)->prev)
-		(*ways) = (*ways)->prev;
-}
-
 static t_way	*find_more_ways(t_lem *lem)
 {
 	t_way	*way;
