@@ -40,20 +40,6 @@ static t_ways	*ant_move_tool(t_lem *lem, t_ant **ant_table,
 	return (new);
 }
 
-int				all_ants_done(t_ant **ant_table, t_lem *lem)
-{
-	int		ant;
-
-	ant = 0;
-	while (ant < lem->ants)
-	{
-		if (!(ant_table[ant]->reached_end))
-			return (1);
-		ant++;
-	}
-	return (0);
-}
-
 static void		init_array(int *array)
 {
 	array[1] = 0;
@@ -69,7 +55,14 @@ static void		moves_ways_helper(t_lem *lem, int *array, t_ant **ant_table)
 		array[2]++;
 }
 
-static void		moves_many_ways_part(t_lem *lem, t_ant **ant_table)
+static void		fill_struct(t_ways **curr, t_ways **new, int *array)
+{
+	(*curr)->next = (*new);
+	(*curr) = (*curr)->next;
+	array[1]++;
+}
+
+void			moves_many_ways_part(t_lem *lem, t_ant **ant_table)
 {
 	int		array[4];
 	t_ways	*check;
@@ -89,58 +82,10 @@ static void		moves_many_ways_part(t_lem *lem, t_ant **ant_table)
 			if (array[2] == lem->ants)
 				break ;
 			if ((new = ant_move_tool(lem, ant_table, array, check)))
-			{
-				curr->next = new;
-				curr = curr->next;
-				array[1]++;
-			}
+				fill_struct(&curr, &new, array);
 			array[2]++;
 		}
 		remove_only_ways(check);
 		ft_putstr("\n");
-	}
-}
-
-void			print_full_moves(t_lem *lem, t_ways *ways)
-{
-	t_ant	**ant_table;
-
-	ant_table = create_ant_table(lem, ways);
-	moves_many_ways_part(lem, ant_table);
-	remove_ant_table(lem, ant_table);
-}
-
-void			print_paths(t_lem *lem, t_way *way, int debug)
-{
-	t_way	*print;
-
-	print = way;
-	while (!ft_strequ(print->room->name, lem->end->name))
-	{
-		if (debug)
-		{
-			ft_putstr(print->room->name);
-			ft_putstr(" -> ");
-		}
-		print = print->prev;
-	}
-	if (debug)
-	{
-		ft_putstr(lem->end->name);
-		ft_putstr("\n");
-	}
-}
-
-void			print_ant_ways(t_lem *lem, t_ways *ways)
-{
-	t_ways	*print;
-
-	print = ways;
-	while (print)
-	{
-		while (print->way->next)
-			print->way = print->way->next;
-		print_paths(lem, print->way, 0);
-		print = print->next;
 	}
 }

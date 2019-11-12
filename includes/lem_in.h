@@ -115,6 +115,9 @@ void				print_moves(int ant_number, char *room);
 void				print_full_moves(t_lem *lem, t_ways *ways);
 void				print_one_path_to_end(t_lem *lem);
 int					is_one_path(t_lem *lem);
+int					all_ants_done(t_ant **ant_table, t_lem *lem);
+void				print_full_moves(t_lem *lem, t_ways *ways);
+void				moves_many_ways_part(t_lem *lem, t_ant **ant_table);
 
 void				ant_alg(t_lem *lem, t_way *first, char *map);
 void				print_ant_ways(t_lem *lem, t_ways *ways);
